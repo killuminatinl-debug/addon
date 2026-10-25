@@ -24,7 +24,10 @@ function afb_uid() {
     return isset($data['user_id']) ? (int)$data['user_id'] : 0;
 }
 function afb_is_admin() {
-    return function_exists('canManageAddons') && canManageAddons();
+    global $data;
+    if (function_exists('canManageAddons')) return (bool)canManageAddons();
+    if (function_exists('isAdmin')) return (bool)isAdmin(is_array($data) ? $data : array());
+    return isset($data['user_rank']) && is_numeric($data['user_rank']) && (int)$data['user_rank'] >= 8;
 }
 function afb_token_valid() {
     return isset($_POST['token']) && is_scalar($_POST['token']) && trim((string)$_POST['token']) !== '';

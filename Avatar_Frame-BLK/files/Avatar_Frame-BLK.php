@@ -35,7 +35,7 @@ if (isset($addons) && is_array($addons) && (!function_exists('boomAllow') || boo
     });
   };
   $(function(){
-    if(typeof appInputMenu==='function')appInputMenu('addons/<?php echo rawurlencode($afbSlug); ?>/files/icon.png','avatar_frame_box();');
+    if(typeof appInputMenu==='function')appInputMenu('addons/<?php echo rawurlencode($afbSlug); ?>/files/icon.svg','avatar_frame_box();');
     window.update_frame();
     if(window.afbFrameTimer)clearInterval(window.afbFrameTimer);
     window.afbFrameTimer=setInterval(window.update_frame,60000);

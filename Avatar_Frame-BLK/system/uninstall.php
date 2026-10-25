@@ -2,10 +2,6 @@
 if (!defined('BOOM')) {
     require_once __DIR__ . '/../../../system/config_addons.php';
 }
-if (!function_exists('canManageAddons') || !canManageAddons()) {
-    http_response_code(403);
-    exit('Geen toegang.');
-}
 if (isset($mysqli) && $mysqli instanceof mysqli) {
     // Keep the user's selected-frame column/data by default; only remove the addon catalog.
     $mysqli->query("DROP TABLE IF EXISTS `avatar_frame`");

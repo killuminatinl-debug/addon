@@ -6,10 +6,6 @@ if (!isset($mysqli) || !($mysqli instanceof mysqli)) {
     http_response_code(500);
     exit('Databaseverbinding ontbreekt.');
 }
-if (function_exists('canManageAddons') && !canManageAddons()) {
-    http_response_code(403);
-    exit('Geen toegang.');
-}
 $ok = $mysqli->query("CREATE TABLE IF NOT EXISTS `avatar_frame` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `price` int(11) NOT NULL DEFAULT 0,

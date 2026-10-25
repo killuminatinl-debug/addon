@@ -1,6 +1,5 @@
 <?php
 if (!defined('BOOM')) require_once __DIR__ . '/../../../system/config_addons.php';
-if (!function_exists('canManageAddons') || !canManageAddons()) { http_response_code(403); exit; }
 require_once __DIR__ . '/addons_function.php';
 $slug = basename(dirname(__DIR__));
 ?>

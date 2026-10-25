@@ -1,0 +1,14 @@
+AVATAR FRAME BLK — CODYCHAT 11 / PHP 8.x
+
+Installatie:
+1. Maak een back-up van bestanden en database.
+2. Plaats de map Avatar_Frame-BLK in /addons/.
+3. Maak /addons/Avatar_Frame-BLK/files/frames/ schrijfbaar voor PHP.
+4. Voer system/install.php uit via de addon-installatieprocedure of als ingelogde beheerder.
+5. Open het addon-beheerpaneel en upload minimaal één afbeelding.
+6. Test als normale speler: openen, frame selecteren en frame verwijderen.
+
+Belangrijk:
+- Alleen PNG, JPG/JPEG, GIF en WebP worden geaccepteerd; maximaal 5 MB.
+- De selectie zelf is gratis. Prijs-/valutavelden uit de oude addon zijn niet aangesloten op een universele wallet-API; die is per CodyChat-build verschillend en wordt niet geraden.
+- Test op een kopie van je eigen CodyChat 11-build voordat je live gaat.

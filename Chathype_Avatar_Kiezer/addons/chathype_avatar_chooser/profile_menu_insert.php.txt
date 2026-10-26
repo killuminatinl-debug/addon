@@ -13,7 +13,7 @@ B) In .modal_top_menu, directly after the own-profile edit button, add:
 C) Add this script once at the bottom of the profile template. It loads the editor HTML and opens it in CodyChat's overlay/modal. The editor endpoint returns content only (it does not wrap it in a second modal).
 <script>
 (function($){
-    function chathypeOpenAvatarPicker(){
+    window.chathypeOpenAvatarPicker = function(){
         $.ajax({
             url: 'addons/chathype_avatar_chooser/files/avatar_picker.php',
             type: 'POST',
@@ -42,13 +42,13 @@ C) Add this script once at the bottom of the profile template. It loads the edit
             console.error('Avatar editor request failed:', xhr.status, xhr.responseText);
             if(typeof callError === 'function') callError('Avatar-editor laden mislukt (HTTP ' + xhr.status + ').');
         });
-    }
+    };
 
     $(document)
         .off('click.chathypeAvatar', '#chathype_open_avatar_picker')
         .on('click.chathypeAvatar', '#chathype_open_avatar_picker', function(e){
             e.preventDefault();
-            chathypeOpenAvatarPicker();
+            window.chathypeOpenAvatarPicker();
         })
         .off('keydown.chathypeAvatar', '#chathype_open_avatar_picker')
         .on('keydown.chathypeAvatar', '#chathype_open_avatar_picker', function(e){

@@ -176,10 +176,38 @@ ob_start();
 @media(max-width:390px){.chac_live{display:none}.chac_editor{padding:14px 11px}.chac_stage{padding:12px}.chac_choice_grid{grid-template-columns:repeat(2,minmax(0,1fr))}.chac_accessory_choices{grid-template-columns:repeat(3,minmax(0,1fr))}.chac_stage_buttons{grid-template-columns:1fr}.chac_color_grid{gap:6px}.chac_color_control{padding:8px}.chac_tabs button{gap:4px;font-size:10px}.chac_tabs button i{font-size:11px}}
 @media(prefers-reduced-motion:reduce){.ch_avatar_modal.chac_studio *{animation:none!important;transition:none!important}}
 
-/* Responsive layout: wide desktop workspace, stacked layout on small screens */
-.ch_avatar_modal.chac_studio{width:min(1180px,96vw)!important;max-width:1180px!important;max-height:92vh!important;overflow:auto!important;margin:0 auto!important}
-.ch_avatar_modal.chac_studio .chac_workspace{display:grid!important;grid-template-columns:minmax(280px,.85fr) minmax(0,1.15fr)!important;align-items:stretch!important;width:100%!important;gap:0!important}
-.ch_avatar_modal.chac_studio .chac_stage{display:flex!important;flex-direction:column!important;position:sticky!important;top:0!important;align-self:start!important;width:auto!important;min-width:0!important;padding:22px!important;border-right:1px solid #e6e5f6!important;border-bottom:0!important}
+/* Modal fix: cover the legacy picker and center the new studio in the viewport */
+.ch_avatar_modal.chac_studio{
+ position:fixed!important;
+ left:50%!important;
+ top:50%!important;
+ right:auto!important;
+ bottom:auto!important;
+ transform:translate(-50%,-50%)!important;
+ z-index:999999!important;
+ display:block!important;
+ width:min(1180px,96vw)!important;
+ max-width:1180px!important;
+ max-height:92vh!important;
+ margin:0!important;
+ overflow:auto!important;
+ background:#f9faff!important;
+ opacity:1!important;
+ visibility:visible!important;
+ box-shadow:0 25px 90px rgba(24,24,50,.38)!important;
+}
+.ch_avatar_modal.chac_studio .chac_workspace{
+ display:grid!important;
+ grid-template-columns:minmax(280px,.85fr) minmax(0,1.15fr)!important;
+ align-items:stretch!important;
+ width:100%!important;
+ gap:0!important;
+}
+.ch_avatar_modal.chac_studio .chac_stage{
+ display:flex!important;flex-direction:column!important;position:relative!important;top:auto!important;
+ align-self:stretch!important;width:auto!important;min-width:0!important;padding:22px!important;
+ border-right:1px solid #e6e5f6!important;border-bottom:0!important;
+}
 .ch_avatar_modal.chac_studio .chac_avatar_stage{width:100%!important;max-width:420px!important;min-height:240px!important;margin:0 auto!important}
 .ch_avatar_modal.chac_studio .chac_avatar_svg{width:100%!important;max-width:390px!important;margin:0 auto!important}
 .ch_avatar_modal.chac_studio .chac_stage_buttons{display:grid!important;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr)!important;flex-direction:row!important;width:100%!important;max-width:none!important;margin:0 auto!important}
@@ -204,10 +232,10 @@ ob_start();
  .ch_avatar_modal.chac_studio .chac_choice_grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
 }
 @media(max-width:650px){
- .ch_avatar_modal.chac_studio{width:100%!important;max-width:100%!important;max-height:93vh!important;border-radius:16px!important}
+ .ch_avatar_modal.chac_studio{left:50%!important;top:50%!important;width:calc(100vw - 16px)!important;max-width:calc(100vw - 16px)!important;max-height:94dvh!important;border-radius:16px!important}
  .ch_avatar_modal.chac_studio .chac_workspace{display:flex!important;flex-direction:column!important}
  .ch_avatar_modal.chac_studio .chac_stage{position:relative!important;top:auto!important;width:100%!important;padding:14px!important;border-right:0!important;border-bottom:1px solid #e6e5f6!important}
- .ch_avatar_modal.chac_studio .chac_avatar_stage{width:min(100%,320px)!important;max-width:320px!important;min-height:0!important}
+ .ch_avatar_modal.chac_studio .chac_avatar_stage{width:min(100%,280px)!important;max-width:280px!important;min-height:0!important}
  .ch_avatar_modal.chac_studio .chac_stage_buttons{display:grid!important;grid-template-columns:minmax(0,.9fr) minmax(0,1.2fr)!important;max-width:420px!important}
  .ch_avatar_modal.chac_studio .chac_editor{width:100%!important;padding:17px 15px!important}
  .ch_avatar_modal.chac_studio .chac_editor_intro{flex-direction:row!important}

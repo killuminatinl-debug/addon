@@ -184,14 +184,10 @@ ob_start();
   if(!root||root.getAttribute('data-chac-ready')==='1')return;
   root.setAttribute('data-chac-ready','1');
   /*
-   * Laat CodyChat zelf de modal positioneren en de achtergrond beheren.
-   * Pas uitsluitend de breedte van de bestaande modal-container aan.
+   * Behoud de originele CodyChat-modal. Pas alleen de breedte aan.
    */
-  root.style.setProperty('width','min(1160px, calc(100vw - 40px))','important');
-  root.style.setProperty('max-width','calc(100vw - 40px)','important');
-  root.style.setProperty('max-height','calc(100vh - 40px)','important');
-  root.style.setProperty('overflow','auto','important');
-  root.style.setProperty('box-sizing','border-box','important');
+  root.style.setProperty('width','min(1200px, calc(100vw - 40px))','important');
+  root.style.setProperty('max-width','min(1200px, calc(100vw - 40px))','important');
   document.addEventListener('keydown',function(event){
     if(event.key==='Escape' && document.body.contains(root) && typeof hideOver==='function'){
       hideOver();

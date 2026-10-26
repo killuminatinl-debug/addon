@@ -3,9 +3,19 @@ $load_addons = 'chathype_avatar_chooser';
 require(__DIR__ . '/../../../system/config_addons.php');
 require_once __DIR__ . '/settings.php';
 
-/* Admin setting: keep the native CodyChat addon toggle working. */
+/* Admin setting: use CodyChat's permission helper, with the same rank fallback as other addon admin screens. */
 if (isset($_POST['save_avatar_setting'])) {
-    if (!canManageAddons() || !isset($_POST['chathype_avatar_enabled'])) {
+    $isAdmin = false;
+    if (function_exists('canManageAddons')) {
+        $isAdmin = (bool)canManageAddons();
+    }
+    if (!$isAdmin && function_exists('isAdmin')) {
+        $isAdmin = (bool)isAdmin(isset($data) && is_array($data) ? $data : array());
+    }
+    if (!$isAdmin && isset($data['user_rank']) && is_numeric($data['user_rank'])) {
+        $isAdmin = ((int)$data['user_rank'] >= 8);
+    }
+    if (!$isAdmin || !isset($_POST['chathype_avatar_enabled']) || !is_scalar($_POST['chathype_avatar_enabled'])) {
         http_response_code(403);
         exit('0');
     }
@@ -16,11 +26,12 @@ if (isset($_POST['save_avatar_setting'])) {
         exit('0');
     }
     $stmt->bind_param('s', $enabled);
-    $ok = $stmt->execute();
+    $ok = $stmt->execute() && ($stmt->affected_rows >= 0);
     $stmt->close();
     if ($ok && function_exists('redisUpdateAddons')) {
         redisUpdateAddons('chathype_avatar_chooser');
     }
+    header('Content-Type: text/plain; charset=utf-8');
     echo $ok ? '5' : '0';
     exit;
 }

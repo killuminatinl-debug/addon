@@ -1,5 +1,5 @@
 <?php
-require(__DIR__ . '/../../../system/config_session.php');
+require(__DIR__ . '/../../../../system/config_session.php');
 require(__DIR__ . '/../system/settings.php');
 if (!chathypeAvatarEnabled() || empty($data['user_id'])) {
     die('');

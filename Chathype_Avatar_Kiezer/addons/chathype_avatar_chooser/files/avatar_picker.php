@@ -186,11 +186,32 @@ ob_start();
   /*
    * Behoud de originele CodyChat-modal. Pas alleen de breedte aan.
    */
-  root.style.setProperty('width','100%','important');
-  root.style.setProperty('max-width','min(1200px, calc(100vw - 40px))','important');
-  root.style.setProperty('margin','0 auto','important');
-  root.style.setProperty('box-shadow','none','important');
-  root.style.setProperty('border','0','important');
+  /*
+   * Toon alleen het avatarvenster: netjes gecentreerd, zonder donkere
+   * achtergrondlaag of extra schaduw. Verander geen andere modal-elementen.
+   */
+  root.style.setProperty('position','fixed','important');
+  root.style.setProperty('left','50%','important');
+  root.style.setProperty('top','50%','important');
+  root.style.setProperty('right','auto','important');
+  root.style.setProperty('bottom','auto','important');
+  root.style.setProperty('transform','translate(-50%, -50%)','important');
+  root.style.setProperty('width','calc(100vw - 32px)','important');
+  root.style.setProperty('max-width','1200px','important');
+  root.style.setProperty('max-height','calc(100vh - 32px)','important');
+  root.style.setProperty('overflow-y','auto','important');
+  root.style.setProperty('margin','0','important');
+  root.style.setProperty('background','#f9faff','important');
+  root.style.setProperty('box-shadow','0 8px 30px rgba(24,24,50,.12)','important');
+  root.style.setProperty('border','1px solid #e8e9f1','important');
+  root.style.setProperty('z-index','100001','important');
+  if(root.parentElement){
+    var host=root.parentElement;
+    if(host.id==='over' || /over|modal|popup/i.test(String(host.id)+' '+String(host.className))){
+      host.style.setProperty('background','transparent','important');
+      host.style.setProperty('box-shadow','none','important');
+    }
+  }
   document.addEventListener('keydown',function(event){
     if(event.key==='Escape' && document.body.contains(root) && typeof hideOver==='function'){
       hideOver();

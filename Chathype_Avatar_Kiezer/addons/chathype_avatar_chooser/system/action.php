@@ -14,11 +14,11 @@ if (isset($_POST['save_avatar_setting'])) {
     if (!function_exists('canManageAddons') || !canManageAddons() ||
         !isset($_POST['chathype_avatar_enabled']) || !is_scalar($_POST['chathype_avatar_enabled'])) {
         http_response_code(403);
-        exit('0');
+        exit('AVATAR_SETTING_ERROR:PERMISSION');
     }
     if (!isset($mysqli) || !($mysqli instanceof mysqli)) {
         http_response_code(500);
-        exit('0');
+        exit('AVATAR_SETTING_ERROR:DATABASE');
     }
 
     $enabled = ((string)$_POST['chathype_avatar_enabled'] === '1') ? '1' : '0';
@@ -27,27 +27,27 @@ if (isset($_POST['save_avatar_setting'])) {
     if (!$check || !$check->execute()) {
         if ($check) $check->close();
         http_response_code(500);
-        exit('0');
+        exit('AVATAR_SETTING_ERROR:QUERY');
     }
     $check->store_result();
     $installed = ($check->num_rows > 0);
     $check->close();
     if (!$installed) {
         http_response_code(409);
-        exit('0');
+        exit('AVATAR_SETTING_ERROR:ADDON_NOT_INSTALLED');
     }
 
     $stmt = $mysqli->prepare("UPDATE boom_addons SET custom1 = ? WHERE addons = 'chathype_avatar_chooser' LIMIT 1");
     if (!$stmt) {
         http_response_code(500);
-        exit('0');
+        exit('AVATAR_SETTING_ERROR:UPDATE_PREPARE');
     }
     $stmt->bind_param('s', $enabled);
     $ok = $stmt->execute();
     $stmt->close();
     if (!$ok) {
         http_response_code(500);
-        exit('0');
+        exit('AVATAR_SETTING_ERROR:UPDATE_FAILED');
     }
     if (function_exists('redisUpdateAddons')) {
         redisUpdateAddons('chathype_avatar_chooser');

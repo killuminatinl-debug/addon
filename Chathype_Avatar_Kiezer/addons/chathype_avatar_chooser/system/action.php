@@ -118,6 +118,61 @@ if (!is_writable($avatarDir)) {
 }
 
 $uid = (int)$data['user_id'];
+
+/*
+ * Bewaar de oorspronkelijke CodyChat-avatar alleen bij de eerste keer.
+ * Bij latere avatarwijzigingen blijft dit origineel behouden zodat uninstall
+ * de avatar kan terugzetten die de gebruiker vóór deze addon had.
+ */
+$backupTable = 'chathype_avatar_chooser_backup';
+$createBackup = $mysqli->query(
+    "CREATE TABLE IF NOT EXISTS `chathype_avatar_chooser_backup` (
+        `user_id` INT NOT NULL,
+        `original_avatar` VARCHAR(255) NOT NULL DEFAULT '',
+        `custom_avatar` VARCHAR(255) NOT NULL DEFAULT '',
+        `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+        PRIMARY KEY (`user_id`)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4"
+);
+if (!$createBackup) {
+    http_response_code(500);
+    exit('AVATAR_ERROR:BACKUP_TABLE_FAILED');
+}
+$originalStmt = $mysqli->prepare('SELECT user_tumb FROM boom_users WHERE user_id = ? LIMIT 1');
+if (!$originalStmt) {
+    http_response_code(500);
+    exit('AVATAR_ERROR:ORIGINAL_AVATAR_QUERY_FAILED');
+}
+$originalStmt->bind_param('i', $uid);
+if (!$originalStmt->execute()) {
+    $originalStmt->close();
+    http_response_code(500);
+    exit('AVATAR_ERROR:ORIGINAL_AVATAR_QUERY_FAILED');
+}
+$originalStmt->bind_result($originalAvatar);
+$hasUser = $originalStmt->fetch();
+$originalStmt->close();
+if (!$hasUser) {
+    http_response_code(404);
+    exit('AVATAR_ERROR:USER_NOT_FOUND');
+}
+$originalAvatar = is_string($originalAvatar) ? $originalAvatar : '';
+$backupStmt = $mysqli->prepare(
+    'INSERT IGNORE INTO `chathype_avatar_chooser_backup` (user_id, original_avatar, custom_avatar) VALUES (?, ?, ?)'
+);
+if (!$backupStmt) {
+    http_response_code(500);
+    exit('AVATAR_ERROR:BACKUP_SAVE_FAILED');
+}
+$emptyCustom = '';
+$backupStmt->bind_param('iss', $uid, $originalAvatar, $emptyCustom);
+$backupOk = $backupStmt->execute();
+$backupStmt->close();
+if (!$backupOk) {
+    http_response_code(500);
+    exit('AVATAR_ERROR:BACKUP_SAVE_FAILED');
+}
+
 $filename = 'chathype_custom_' . $uid . '_' . date('YmdHis') . '_' . bin2hex(random_bytes(3)) . '.png';
 $target = $avatarDir . DIRECTORY_SEPARATOR . $filename;
 $tmp = $target . '.' . uniqid('tmp', true);
@@ -145,6 +200,20 @@ if (!$ok) {
     @unlink($target);
     http_response_code(500);
     exit('AVATAR_ERROR:USER_AVATAR_UPDATE_FAILED');
+}
+
+/* Track the latest generated file, while preserving the first original avatar. */
+$trackStmt = $mysqli->prepare('UPDATE `chathype_avatar_chooser_backup` SET custom_avatar = ? WHERE user_id = ? LIMIT 1');
+if (!$trackStmt) {
+    http_response_code(500);
+    exit('AVATAR_ERROR:BACKUP_UPDATE_FAILED');
+}
+$trackStmt->bind_param('si', $filename, $uid);
+$trackOk = $trackStmt->execute();
+$trackStmt->close();
+if (!$trackOk) {
+    http_response_code(500);
+    exit('AVATAR_ERROR:BACKUP_UPDATE_FAILED');
 }
 if (function_exists('redisUpdateUser')) {
     redisUpdateUser($uid);

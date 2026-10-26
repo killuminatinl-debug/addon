@@ -138,4 +138,4 @@ ob_start();
     draw();
 })(jQuery);
 </script>
-<?php $avatarModalContent = ob_get_clean(); echo boomOverModal($avatarModalContent, 620); ?>
+<?php echo ob_get_clean(); ?>

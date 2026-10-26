@@ -15,7 +15,7 @@ if (!$chacAdminAllowed) {
     http_response_code(403);
     exit('Geen toegang tot de avatar-instellingen.');
 }
-$chacScript = isset($_SERVER['SCRIPT_NAME']) ? str_replace('\\\\', '/', $_SERVER['SCRIPT_NAME']) : '/index.php';
+$chacScript = isset($_SERVER['SCRIPT_NAME']) ? str_replace('\\', '/', $_SERVER['SCRIPT_NAME']) : '/index.php';
 $chacControlPos = strpos($chacScript, '/control/');
 $chacAddonPos = strpos($chacScript, '/addons/');
 if ($chacControlPos !== false) {
@@ -23,7 +23,7 @@ if ($chacControlPos !== false) {
 } elseif ($chacAddonPos !== false) {
     $chacBase = substr($chacScript, 0, $chacAddonPos + 1);
 } else {
-    $chacBase = rtrim(str_replace('\\\\', '/', dirname($chacScript)), '/') . '/';
+    $chacBase = rtrim(str_replace('\\', '/', dirname($chacScript)), '/') . '/';
     if ($chacBase === '//') $chacBase = '/';
 }
 $chacActionUrl = $chacBase . 'addons/chathype_avatar_chooser/system/action.php';

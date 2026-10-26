@@ -5,6 +5,7 @@ if (!chathypeAvatarEnabled() || empty($data['user_id'])) {
     die('');
 }
 start();
+ob_start();
 ?>
 <div class="ch_avatar_modal">
     <button type="button" class="modal_close chac_close" id="chacClose" aria-label="Sluiten" title="Sluiten" onclick="if(typeof hideOver==='function'){hideOver();}else if(typeof hideModal==='function'){hideModal();}else{var e=this.closest('.modal_content');if(e)e.style.display='none';}"><span class="bcell_mid"><i class="fa fa-times"></i></span></button>
@@ -106,7 +107,8 @@ start();
         if(ac==='earrings'){ctx.fillStyle='#fbbf24';ctx.beginPath();ctx.arc(103,190,5,0,Math.PI*2);ctx.arc(257,190,5,0,Math.PI*2);ctx.fill();}
         ctx.fillStyle='#fff';ctx.globalAlpha=.75;ctx.beginPath();ctx.moveTo(153,257);ctx.lineTo(180,276);ctx.lineTo(207,257);ctx.lineTo(198,250);ctx.lineTo(180,263);ctx.lineTo(162,250);ctx.closePath();ctx.fill();ctx.globalAlpha=1;
     }
-    root.querySelectorAll('input').forEach(function(el){if(el.type!=='hidden'){el.addEventListener('input',draw);el.addEventListener('change',draw);}});\n    root.querySelectorAll('.chac_options').forEach(function(group){group.addEventListener('click',function(e){var b=e.target.closest('button[data-value]');if(!b)return;var target=root.querySelector('#chac'+group.getAttribute('data-target'));if(target)target.value=b.getAttribute('data-value');group.querySelectorAll('button').forEach(function(item){item.classList.toggle('is_active',item===b);});draw();});});
+    root.querySelectorAll('input').forEach(function(el){if(el.type!=='hidden'){el.addEventListener('input',draw);el.addEventListener('change',draw);}});
+    root.querySelectorAll('.chac_options').forEach(function(group){group.addEventListener('click',function(e){var b=e.target.closest('button[data-value]');if(!b)return;var target=root.querySelector('#chac'+group.getAttribute('data-target'));if(target)target.value=b.getAttribute('data-value');group.querySelectorAll('button').forEach(function(item){item.classList.toggle('is_active',item===b);});draw();});});
     root.querySelector('#chacRandom').addEventListener('click',function(){
         root.querySelectorAll('input[type=color]').forEach(function(el){el.value='#'+Math.floor(Math.random()*16777215).toString(16).padStart(6,'0');});
         ['HairStyle','Face','Accessory'].forEach(function(id){var el=root.querySelector('#chac'+id),group=root.querySelector('.chac_options[data-target="'+id+'"]');if(!el||!group)return;var opts=group.querySelectorAll('button[data-value]'),pick=opts[Math.floor(Math.random()*opts.length)];el.value=pick.getAttribute('data-value');opts.forEach(function(item){item.classList.toggle('is_active',item===pick);});});
@@ -136,4 +138,4 @@ start();
     draw();
 })(jQuery);
 </script>
-<?php echo boomOverModal(clean(), 620); ?>
+<?php $avatarModalContent = ob_get_clean(); echo boomOverModal($avatarModalContent, 620); ?>

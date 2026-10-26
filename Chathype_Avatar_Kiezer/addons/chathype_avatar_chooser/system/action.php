@@ -3,7 +3,7 @@ header('X-Content-Type-Options: nosniff');
 header('Content-Type: text/plain; charset=utf-8');
 
 $load_addons = 'chathype_avatar_chooser';
-require(__DIR__ . '/../../../../system/config_session.php');
+require(__DIR__ . '/../../../system/config_session.php');
 require_once __DIR__ . '/settings.php';
 
 /* Addonbeheer: alleen bevoegde beheerders mogen de instelling wijzigen. */
@@ -82,12 +82,12 @@ if (!$info || (int)$info[0] !== 360 || (int)$info[1] !== 360 || (int)$info[2] !=
     exit('AVATAR_ERROR:INVALID_IMAGE_DIMENSIONS');
 }
 
-$avatarDir = realpath(__DIR__ . '/../../../../avatar');
+$avatarDir = realpath(__DIR__ . '/../../../avatar');
 if (!$avatarDir || !is_dir($avatarDir)) {
     $candidateDirs = array(
-        realpath(__DIR__ . '/../../../../upload/avatar'),
-        realpath(__DIR__ . '/../../../../uploads/avatar'),
-        realpath(__DIR__ . '/../../../../avatar')
+        realpath(__DIR__ . '/../../../upload/avatar'),
+        realpath(__DIR__ . '/../../../uploads/avatar'),
+        realpath(__DIR__ . '/../../../avatar')
     );
     $avatarDir = false;
     foreach ($candidateDirs as $candidate) {

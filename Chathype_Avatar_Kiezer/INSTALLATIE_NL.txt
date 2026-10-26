@@ -1,0 +1,14 @@
+CHATHYPE AVATAR KIEZER — CODYCHAT 11 / PHP 7.4+
+
+Deze addon is opgebouwd volgens dezelfde CodyChat-addonstructuur als Avatar Frame BLK.
+
+1. Maak een backup van bestanden en database.
+2. Upload addons/chathype_avatar_chooser naar de addons-map.
+3. Ga in CodyChat naar Admin → Addons en installeer chathype_avatar_chooser via de normale addon-installatieprocedure. system/install.php bevat de vereiste $ad-metadata; hierdoor wordt de boom_addons-record aangemaakt en verschijnt de configuratie in het beheer.
+4. Integreer de knop uit profile_menu_insert.php.txt in system/box/profile.php, of gebruik de meegeleverde INTEGRATIE/system/box/profile.php op een backup/testinstallatie.
+5. Zorg dat /avatar schrijfbaar is voor PHP.
+6. Open Admin → Addons → Chathype Avatar Kiezer en zet de functie aan.
+
+De instelling gebruikt boom_addons.custom1: 1 = aan, 0 = uit. De profielknop verschijnt alleen op het eigen profiel als de functie aanstaat. De server controleert de instelling ook bij het opslaan. Alleen de ingelogde speler kan zijn eigen user_tumb wijzigen.
+
+PHP-syntax en ZIP-integriteit zijn gecontroleerd. Niet live getest op jouw Hostinger/XAMPP-installatie; test eerst op een kopie.

@@ -2,9 +2,8 @@
 /* Chathype Avatar Kiezer — vernieuwd CodyChat 11-beheercentrum (PHP 7.4+). */
 $load_addons = 'chathype_avatar_chooser';
 require(__DIR__ . '/../../../system/config_addons.php');
-if (function_exists('canManageAddons') && !canManageAddons()) {
-    echo '<div class="page_full"><div class="boom_error">Geen toestemming om addon-instellingen te beheren.</div></div>';
-    return;
+if (!function_exists('canManageAddons') || !canManageAddons()) {
+    die();
 }
 $avatarEnabled = isset($addons['custom1']) ? ((string)$addons['custom1'] !== '0') : true;
 ?>

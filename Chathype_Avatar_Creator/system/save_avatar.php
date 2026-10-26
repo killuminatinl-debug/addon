@@ -25,7 +25,7 @@ $tmp = $target . '.tmp';
 if (!imagepng($im, $tmp, 7)) { imagedestroy($im); chac_fail('Avatar opslaan mislukt.', 500); }
 imagedestroy($im);
 if (!@rename($tmp, $target)) { @unlink($tmp); chac_fail('Avatarbestand kon niet worden geplaatst.', 500); }
-$relative = 'addons/chathype_avatar_creator/system/saved/' . $fileName;
+$relative = 'addons/Chathype_Avatar_Creator/system/saved/' . $fileName;
 $stmt = $mysqli->prepare('UPDATE boom_users SET user_tumb = ? WHERE user_id = ? LIMIT 1');
 if (!$stmt) chac_fail('Database-update mislukt: ' . $mysqli->error, 500);
 $stmt->bind_param('si', $relative, $userId);

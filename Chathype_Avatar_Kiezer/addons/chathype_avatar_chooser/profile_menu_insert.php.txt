@@ -54,7 +54,7 @@ C) Add this script once at the bottom of the profile template. It loads the edit
         .on('keydown.chathypeAvatar', '#chathype_open_avatar_picker', function(e){
             if(e.key === 'Enter' || e.key === ' '){
                 e.preventDefault();
-                chathypeOpenAvatarPicker();
+                window.chathypeOpenAvatarPicker();
             }
         });
 })(jQuery);

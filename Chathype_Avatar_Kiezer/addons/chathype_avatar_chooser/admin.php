@@ -13,8 +13,14 @@ if (!$isAdmin && isset($data['user_rank']) && is_numeric($data['user_rank'])) {
     $isAdmin = ((int)$data['user_rank'] >= 8);
 }
 if (!$isAdmin) {
-    http_response_code(403);
-    exit('Geen toegang.');
+    // Some CodyChat admin loaders do not expose permission helper functions.
+    // Fall back to the logged-in user's actual CodyChat rank.
+    $rank = (isset($data) && is_array($data) && isset($data['user_rank']) && is_numeric($data['user_rank']))
+        ? (int)$data['user_rank'] : 0;
+    if ($rank < 8) {
+        http_response_code(403);
+        exit('Geen toegang.');
+    }
 }
 
 $message = '';
@@ -36,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['chathype_avatar_enabl
 $current = chathypeAvatarEnabled();
 
 /* Build an URL for CodyChat root installs and subfolder installs. */
-$chacScript = isset($_SERVER["SCRIPT_NAME"]) ? str_replace("\\\\", "/", $_SERVER["SCRIPT_NAME"]) : "/index.php";
+$chacScript = isset($_SERVER['SCRIPT_NAME']) ? str_replace('\\', '/', $_SERVER['SCRIPT_NAME']) : '/index.php';
 $chacControlPos = strpos($chacScript, "/control/");
 $chacAddonPos = strpos($chacScript, "/addons/");
 if ($chacControlPos !== false) {
@@ -44,7 +50,7 @@ if ($chacControlPos !== false) {
 } elseif ($chacAddonPos !== false) {
     $chacBase = substr($chacScript, 0, $chacAddonPos + 1);
 } else {
-    $chacBase = rtrim(str_replace("\\\\", "/", dirname($chacScript)), "/") . "/";
+    $chacBase = rtrim(str_replace('\\', '/', dirname($chacScript)), '/') . '/';
     if ($chacBase === "//") $chacBase = "/";
 }
 $chacAdminUrl = $chacBase . "addons/chathype_avatar_chooser/admin.php";

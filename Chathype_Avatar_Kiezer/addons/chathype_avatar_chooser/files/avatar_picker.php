@@ -7,7 +7,7 @@ if (!chathypeAvatarEnabled() || empty($data['user_id'])) {
 start();
 ?>
 <div class="modal_content ch_avatar_modal">
-    <button type="button" class="modal_close chac_close" id="chacClose" aria-label="Sluiten" title="Sluiten"><span class="bcell_mid"><i class="fa fa-times"></i></span></button>
+    <button type="button" class="modal_close chac_close" id="chacClose" aria-label="Sluiten" title="Sluiten" onclick="if(typeof hideOver==='function'){hideOver();}else if(typeof hideModal==='function'){hideModal();}else{var e=this.closest('.modal_content');if(e)e.style.display='none';}"><span class="bcell_mid"><i class="fa fa-times"></i></span></button>
     <div class="chac_head">
         <div class="chac_icon"><i class="fa fa-user-circle"></i></div>
         <div><div class="chac_title">Maak je eigen avatar</div><div class="chac_sub">Stel zelf je gezicht, kleuren en stijl samen.</div></div>

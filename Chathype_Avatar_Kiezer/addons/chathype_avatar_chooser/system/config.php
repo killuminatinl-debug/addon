@@ -99,7 +99,7 @@ $avatarEnabled = isset($addons['custom1']) ? ((string)$addons['custom1'] !== '0'
     var enabled=$toggle.is(':checked')?'1':'0';
     $button.prop('disabled',true).html('<i class="fa fa-spinner fa-spin"></i> Opslaan…');
     $status.removeClass('ok error').text('Instellingen worden opgeslagen…');
-    $.ajax({url:(function(){var p=(typeof getChatPath==='function'?getChatPath():'');if(p&&p.charAt(p.length-1)!=='/')p+='/';return p+'addons/chathype_avatar_chooser/system/action.php';})(),method:'POST',data:{save_avatar_setting:1,chathype_avatar_enabled:enabled},cache:false,dataType:'text'})
+    $.ajax({url:'addons/chathype_avatar_chooser/system/action.php',method:'POST',data:{save_avatar_setting:1,chathype_avatar_enabled:enabled},cache:false,dataType:'text'})
     .done(function(response){
       if(String(response).trim()==='5'){
         $status.removeClass('error').addClass('ok').text('✓ Instellingen opgeslagen. De wijziging is direct actief.');

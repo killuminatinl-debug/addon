@@ -1,0 +1,21 @@
+PROFILE MENU INTEGRATION — CodyChat 11
+
+1) In system/box/profile.php, after config_session.php is loaded, add:
+require_once(__DIR__ . '/../../addons/chathype_avatar_creator/system/settings.php');
+
+2) Inside the profile modal menu for the logged-in user's OWN profile, add:
+<?php if(mySelf($user['user_id']) && function_exists('chathypeCreatorEnabled') && chathypeCreatorEnabled()){ ?>
+<div class="cover_text modal_top_item" role="button" tabindex="0" title="Maak je eigen avatar" onclick="chathypeOpenAvatarCreator();"><i class="fa fa-magic"></i></div>
+<?php } ?>
+
+3) Add this script to the profile template:
+<script>
+function chathypeOpenAvatarCreator(){
+ $.post('addons/chathype_avatar_creator/files/avatar_creator.php', {}, function(r){
+  if(typeof overModal === 'function') overModal(r);
+  else if(typeof showEmptyModal === 'function') showEmptyModal(r, 620);
+ });
+}
+</script>
+
+Install the complete addons/chathype_avatar_creator directory. The admin toggle appears under Admin → Addons after installing it with CodyChat's normal addon installer. This is an integration snippet for the profile template; it does not edit your CodyChat core automatically.

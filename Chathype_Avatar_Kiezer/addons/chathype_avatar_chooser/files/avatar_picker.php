@@ -7,12 +7,7 @@ if (!chathypeAvatarEnabled() || empty($data['user_id'])) {
 start();
 ob_start();
 ?>
-<?php
-$chacScriptPath = isset($_SERVER['SCRIPT_NAME']) ? str_replace('\\\\', '/', dirname($_SERVER['SCRIPT_NAME'])) : '';
-$chacBasePath = ($chacScriptPath === '/' || $chacScriptPath === '.' ? '' : rtrim($chacScriptPath, '/'));
-$chacActionUrl = $chacBasePath . '/addons/chathype_avatar_chooser/system/action.php';
-?>
-<div class="ch_avatar_modal chac_studio" data-action-url="<?php echo htmlspecialchars($chacActionUrl, ENT_QUOTES, 'UTF-8'); ?>" data-chac-ready="0">
+<div class="ch_avatar_modal chac_studio" data-action-path="addons/chathype_avatar_chooser/system/action.php" data-chac-ready="0">
   <header class="chac_topbar">
     <div class="chac_brand"><span class="chac_brandmark"><i class="fa fa-magic"></i></span><span><strong>Chathype Avatar Studio</strong><small>Jouw look. Jouw stijl.</small></span></div>
     <span class="chac_live"><i></i> LIVE VOORBEELD</span>
@@ -260,7 +255,7 @@ $chacActionUrl = $chacBasePath . '/addons/chathype_avatar_chooser/system/action.
     renderCanvas(function(err){
       if(err){button.disabled=false;status.className='chac_status error';status.textContent='De avatar kon niet worden klaargemaakt. Probeer het opnieuw.';return}
       status.textContent='Avatar veilig opslaan…';
-      $.ajax({url:root.getAttribute('data-action-url'),method:'POST',data:{save_custom_avatar:1,image:canvas.toDataURL('image/png')},cache:false,dataType:'text'})
+      $.ajax({url:(function(){var path=root.getAttribute('data-action-path');var current=window.location.pathname;var base=current.substring(0,current.lastIndexOf('/')+1);return base+path})(),method:'POST',data:{save_custom_avatar:1,image:canvas.toDataURL('image/png')},cache:false,dataType:'text'})
       .done(function(response){if(String(response).trim()==='5'){status.className='chac_status ok';status.textContent='Gelukt! Je nieuwe avatar is opgeslagen.';if(typeof callSuccess==='function'&&typeof system!=='undefined')callSuccess(system.saved||'Opgeslagen');setTimeout(function(){if(typeof hideOver==='function')hideOver();window.location.reload()},650)}else{status.className='chac_status error';var msg=String(response).trim();status.textContent=msg.indexOf('AVATAR_ERROR:')===0?'Opslaan mislukt: '+msg.replace('AVATAR_ERROR:','').replace(/_/g,' ').toLowerCase()+'.':'Opslaan mislukt. Serverantwoord: '+msg.slice(0,140)}})
       .fail(function(xhr){status.className='chac_status error';var detail=String(xhr.responseText||'').trim();status.textContent='Opslaan mislukt (HTTP '+xhr.status+'). '+(detail?detail.slice(0,130):'Controleer de PHP-errorlog en schrijfpermissies van de avatar-map.')})
       .always(function(){button.disabled=false});

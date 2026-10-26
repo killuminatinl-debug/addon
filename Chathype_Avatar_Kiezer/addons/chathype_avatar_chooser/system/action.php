@@ -1,4 +1,5 @@
 <?php
+header('X-Content-Type-Options: nosniff');
 $load_addons = 'chathype_avatar_chooser';
 require(__DIR__ . '/../../../system/config_addons.php');
 require_once __DIR__ . '/settings.php';
@@ -39,14 +40,16 @@ if (isset($_POST['save_avatar_setting'])) {
 /* Member-created avatar: accept only a valid PNG data URL from the logged-in user. */
 if (!chathypeAvatarEnabled() || empty($data['user_id']) || !isset($_POST['save_custom_avatar'])) {
     http_response_code(403);
-    exit('0');
+    header('Content-Type: text/plain; charset=utf-8');
+    exit('AVATAR_ERROR:SESSION_OR_DISABLED');
 }
 
 $imageData = isset($_POST['image']) ? (string)$_POST['image'] : '';
 if (strlen($imageData) > 1800000 ||
     !preg_match('#^data:image/png;base64,([A-Za-z0-9+/=]+)$#D', $imageData, $matches)) {
     http_response_code(400);
-    exit('0');
+    header('Content-Type: text/plain; charset=utf-8');
+    exit('AVATAR_ERROR:INVALID_IMAGE_DATA');
 }
 
 $png = base64_decode($matches[1], true);
@@ -64,7 +67,8 @@ if (!$info || $info[0] !== 360 || $info[1] !== 360 || $info[2] !== IMAGETYPE_PNG
 $avatarDir = realpath(__DIR__ . '/../../../avatar');
 if (!$avatarDir || !is_dir($avatarDir) || !is_writable($avatarDir)) {
     http_response_code(500);
-    exit('0');
+    header('Content-Type: text/plain; charset=utf-8');
+    exit('AVATAR_ERROR:SERVER_OR_FOLDER_PERMISSION');
 }
 
 $uid = (int)$data['user_id'];
@@ -74,7 +78,8 @@ $tmp = $target . '.tmp';
 if (@file_put_contents($tmp, $png, LOCK_EX) === false) {
     @unlink($tmp);
     http_response_code(500);
-    exit('0');
+    header('Content-Type: text/plain; charset=utf-8');
+    exit('AVATAR_ERROR:DATABASE_UPDATE_FAILED');
 }
 if (!@rename($tmp, $target)) {
     @unlink($tmp);
@@ -97,4 +102,5 @@ if (!$ok) {
 if (function_exists('redisUpdateUser')) {
     redisUpdateUser($uid);
 }
+header('Content-Type: text/plain; charset=utf-8');
 echo '5';

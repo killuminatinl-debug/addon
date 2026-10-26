@@ -1,47 +1,61 @@
 <?php
+/*
+ * Chathype Avatar Kiezer — native CodyChat 11 actions.
+ * Admin save follows the working Chathype Avatar Creator admin action pattern.
+ */
 header('X-Content-Type-Options: nosniff');
 header('Content-Type: text/plain; charset=utf-8');
 
 $load_addons = 'chathype_avatar_chooser';
-require(__DIR__ . '/../../../system/config_session.php');
+require(__DIR__ . '/../../../system/config_addons.php');
 require_once __DIR__ . '/settings.php';
 
-/* Addonbeheer: alleen bevoegde beheerders mogen de instelling wijzigen. */
 if (isset($_POST['save_avatar_setting'])) {
-    $isAdmin = false;
-    if (function_exists('canManageAddons')) {
-        $isAdmin = (bool)canManageAddons();
-    }
-    if (!$isAdmin && function_exists('isAdmin')) {
-        $isAdmin = (bool)isAdmin(isset($data) && is_array($data) ? $data : array());
-    }
-    if (!$isAdmin && isset($data['user_rank']) && is_numeric($data['user_rank'])) {
-        $isAdmin = ((int)$data['user_rank'] >= 8);
-    }
-    if (!$isAdmin || !isset($_POST['chathype_avatar_enabled']) || !is_scalar($_POST['chathype_avatar_enabled'])) {
+    if (!function_exists('canManageAddons') || !canManageAddons() ||
+        !isset($_POST['chathype_avatar_enabled']) || !is_scalar($_POST['chathype_avatar_enabled'])) {
         http_response_code(403);
-        exit('AVATAR_ERROR:NOT_AUTHORIZED');
+        exit('0');
     }
+    if (!isset($mysqli) || !($mysqli instanceof mysqli)) {
+        http_response_code(500);
+        exit('0');
+    }
+
     $enabled = ((string)$_POST['chathype_avatar_enabled'] === '1') ? '1' : '0';
+
+    $check = $mysqli->prepare("SELECT addons FROM boom_addons WHERE addons = 'chathype_avatar_chooser' LIMIT 1");
+    if (!$check || !$check->execute()) {
+        if ($check) $check->close();
+        http_response_code(500);
+        exit('0');
+    }
+    $check->store_result();
+    $installed = ($check->num_rows > 0);
+    $check->close();
+    if (!$installed) {
+        http_response_code(409);
+        exit('0');
+    }
+
     $stmt = $mysqli->prepare("UPDATE boom_addons SET custom1 = ? WHERE addons = 'chathype_avatar_chooser' LIMIT 1");
     if (!$stmt) {
         http_response_code(500);
-        exit('AVATAR_ERROR:SETTING_QUERY_FAILED');
+        exit('0');
     }
     $stmt->bind_param('s', $enabled);
     $ok = $stmt->execute();
     $stmt->close();
-    if ($ok && function_exists('redisUpdateAddons')) {
-        redisUpdateAddons('chathype_avatar_chooser');
-    }
     if (!$ok) {
         http_response_code(500);
-        exit('AVATAR_ERROR:SETTING_SAVE_FAILED');
+        exit('0');
+    }
+    if (function_exists('redisUpdateAddons')) {
+        redisUpdateAddons('chathype_avatar_chooser');
     }
     exit('5');
 }
 
-/* Opslaan van de avatar van de ingelogde gebruiker. */
+/* Save the logged-in member's generated avatar. */
 if (!chathypeAvatarEnabled()) {
     http_response_code(403);
     exit('AVATAR_ERROR:ADDON_DISABLED');
@@ -107,7 +121,6 @@ $uid = (int)$data['user_id'];
 $filename = 'chathype_custom_' . $uid . '_' . date('YmdHis') . '_' . bin2hex(random_bytes(3)) . '.png';
 $target = $avatarDir . DIRECTORY_SEPARATOR . $filename;
 $tmp = $target . '.' . uniqid('tmp', true);
-
 if (@file_put_contents($tmp, $png, LOCK_EX) === false) {
     @unlink($tmp);
     http_response_code(500);
@@ -121,15 +134,14 @@ if (!@rename($tmp, $target)) {
 
 $stmt = $mysqli->prepare('UPDATE boom_users SET user_tumb = ? WHERE user_id = ? LIMIT 1');
 if (!$stmt) {
+    @unlink($target);
     http_response_code(500);
     exit('AVATAR_ERROR:USER_QUERY_FAILED');
 }
 $stmt->bind_param('si', $filename, $uid);
 $ok = $stmt->execute();
-$changed = $stmt->affected_rows;
 $stmt->close();
-
-if (!$ok || $changed < 0) {
+if (!$ok) {
     @unlink($target);
     http_response_code(500);
     exit('AVATAR_ERROR:USER_AVATAR_UPDATE_FAILED');

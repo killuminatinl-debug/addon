@@ -11,7 +11,7 @@ require(__DIR__ . '/../../../system/config_addons.php');
 require_once __DIR__ . '/settings.php';
 
 if (isset($_POST['save_avatar_setting'])) {
-    if ((function_exists('canManageAddons') && !canManageAddons()) ||
+    if (!function_exists('canManageAddons') || !canManageAddons() ||
         !isset($_POST['chathype_avatar_enabled']) || !is_scalar($_POST['chathype_avatar_enabled'])) {
         http_response_code(403);
         exit('AVATAR_SETTING_ERROR:PERMISSION');

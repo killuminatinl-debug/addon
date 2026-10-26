@@ -10,7 +10,7 @@ ob_start();
 <div class="ch_avatar_modal chac_studio" data-action-path="addons/chathype_avatar_chooser/system/action.php" data-chac-ready="0">
   <header class="chac_topbar">
     <div class="chac_brand"><span class="chac_brandmark"><i class="fa fa-magic"></i></span><span><strong>Chathype Avatar Studio</strong><small>Jouw look. Jouw stijl.</small></span></div>
-    <div class="chac_topbar_actions"><span class="chac_live"><i></i> LIVE VOORBEELD</span><button type="button" class="chac_close" id="chacClose" aria-label="Avatarvenster sluiten" title="Sluiten"><i class="fa fa-times" aria-hidden="true"></i></button></div>
+    <div class="chac_topbar_actions"><span class="chac_live"><i></i> LIVE VOORBEELD</span><button type="button" class="chac_close" id="chacClose" aria-label="Avatarvenster sluiten" title="Sluiten"><span aria-hidden="true">×</span></button></div>
   </header>
   <div class="chac_workspace">
     <aside class="chac_stage">
@@ -116,7 +116,7 @@ ob_start();
 .ch_avatar_modal.chac_studio *{box-sizing:border-box}
 .ch_avatar_modal.chac_studio button,.ch_avatar_modal.chac_studio input{font:inherit}
 .chac_topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:18px 23px;background:#fff;border-bottom:1px solid var(--chac-line)}
-.chac_topbar_actions{display:flex;align-items:center;gap:10px;flex:0 0 auto}.chac_close{display:flex!important;align-items:center;justify-content:center;width:36px;height:36px;flex:0 0 36px;margin:0!important;padding:0!important;border:1px solid #e5e6ef!important;border-radius:10px!important;background:#fff!important;color:#52536a!important;font-size:17px!important;line-height:1!important;cursor:pointer}.chac_close:hover{background:#f3f1ff!important;color:#6558e8!important}.chac_brand{display:flex;align-items:center;gap:11px;min-width:0}.chac_brandmark{display:flex;align-items:center;justify-content:center;flex:0 0 42px;width:42px;height:42px;border-radius:14px;background:#fffc00;color:#171923;font-size:19px}
+.chac_topbar_actions{display:flex;align-items:center;gap:10px;flex:0 0 auto}.chac_close{display:flex!important;align-items:center;justify-content:center;width:38px;height:38px;flex:0 0 38px;margin:0!important;padding:0!important;border:1px solid #e5e6ef!important;border-radius:10px!important;background:#fff!important;color:#52536a!important;font-family:Arial,sans-serif!important;font-size:28px!important;font-weight:400!important;line-height:1!important;cursor:pointer;position:relative;z-index:5}.chac_close span{display:block;line-height:1;transform:translateY(-1px);pointer-events:none}.chac_close:hover{background:#f3f1ff!important;color:#6558e8!important}.chac_brand{display:flex;align-items:center;gap:11px;min-width:0}.chac_brandmark{display:flex;align-items:center;justify-content:center;flex:0 0 42px;width:42px;height:42px;border-radius:14px;background:#fffc00;color:#171923;font-size:19px}
 .chac_brand strong,.chac_brand small{display:block}.chac_brand strong{font-size:15px;font-weight:900;letter-spacing:-.25px}.chac_brand small{margin-top:2px;font-size:11px;color:var(--chac-muted)}
 .chac_live{display:flex;align-items:center;gap:7px;flex:0 0 auto;padding:7px 10px;border:1px solid #e6e6f0;border-radius:30px;color:#73748a;font-size:9px;font-weight:900;letter-spacing:.8px}.chac_live i,.chac_online_dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:#22c58b;box-shadow:0 0 0 3px #e3fbf1}
 .chac_workspace{display:grid;grid-template-columns:minmax(265px,.82fr) minmax(0,1.18fr);align-items:stretch;gap:0}

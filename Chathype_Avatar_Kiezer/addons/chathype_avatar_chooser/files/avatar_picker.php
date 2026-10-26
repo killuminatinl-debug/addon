@@ -10,7 +10,7 @@ ob_start();
 <div class="ch_avatar_modal chac_studio" data-action-path="addons/chathype_avatar_chooser/system/action.php" data-chac-ready="0">
   <header class="chac_topbar">
     <div class="chac_brand"><span class="chac_brandmark"><i class="fa fa-magic"></i></span><span><strong>Chathype Avatar Studio</strong><small>Jouw look. Jouw stijl.</small></span></div>
-    <span class="chac_live"><i></i> LIVE VOORBEELD</span><button type="button" class="chac_close" id="chacClose" aria-label="Avatarvenster sluiten" title="Sluiten"><i class="fa fa-times" aria-hidden="true"></i></button>
+    <span class="chac_live"><i></i> LIVE VOORBEELD</span>
   </header>
   <div class="chac_workspace">
     <aside class="chac_stage">
@@ -177,54 +177,6 @@ ob_start();
 @media(prefers-reduced-motion:reduce){.ch_avatar_modal.chac_studio *{animation:none!important;transition:none!important}}
 
 
-/* Avatar Studio: één consistente layout binnen de originele CodyChat-modal. */
-.ch_avatar_modal.chac_studio{
-  position:relative!important;inset:auto!important;transform:none!important;
-  display:block!important;width:100%!important;min-width:0!important;
-  max-width:none!important;max-height:none!important;height:auto!important;
-  margin:0!important;overflow:visible!important;opacity:1!important;
-  visibility:visible!important;z-index:auto!important;
-  background:#f9faff!important;box-shadow:none!important;
-}
-.ch_avatar_modal.chac_studio .chac_workspace{
-  display:grid!important;grid-template-columns:minmax(260px,.82fr) minmax(0,1.18fr)!important;
-  align-items:stretch!important;min-width:0!important;
-}
-.ch_avatar_modal.chac_studio .chac_stage{position:relative!important;top:auto!important;min-width:0!important;padding:22px!important}
-.ch_avatar_modal.chac_studio .chac_editor{min-width:0!important;padding:22px 24px 16px!important}
-.ch_avatar_modal.chac_studio .chac_stage_buttons{grid-template-columns:minmax(0,.92fr) minmax(0,1.3fr)!important}
-.ch_avatar_modal.chac_studio .chac_tabs button{gap:7px}
-.ch_avatar_modal.chac_studio .chac_choice_grid{grid-template-columns:repeat(4,minmax(0,1fr))}
-@media(max-width:950px){
-  .ch_avatar_modal.chac_studio .chac_workspace{grid-template-columns:minmax(220px,.72fr) minmax(0,1.28fr)!important}
-  .ch_avatar_modal.chac_studio .chac_stage{padding:15px!important}
-  .ch_avatar_modal.chac_studio .chac_editor{padding:18px!important}
-  .ch_avatar_modal.chac_studio .chac_stage_buttons{grid-template-columns:minmax(0,1fr)!important}
-  .ch_avatar_modal.chac_studio .chac_tabs button{gap:4px;font-size:10px}
-  .ch_avatar_modal.chac_studio .chac_choice_grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
-}
-@media(max-width:650px){
-  .ch_avatar_modal.chac_studio{border-radius:16px!important}
-  .ch_avatar_modal.chac_studio .chac_workspace{display:flex!important;flex-direction:column!important}
-  .ch_avatar_modal.chac_studio .chac_stage{position:relative!important;top:auto!important;width:100%!important;padding:14px!important;border-right:0!important;border-bottom:1px solid #e6e5f6!important}
-  .ch_avatar_modal.chac_studio .chac_avatar_stage{width:min(100%,280px)!important;max-width:280px!important;min-height:0!important}
-  .ch_avatar_modal.chac_studio .chac_stage_buttons{display:grid!important;grid-template-columns:minmax(0,.9fr) minmax(0,1.2fr)!important;max-width:420px!important}
-  .ch_avatar_modal.chac_studio .chac_editor{width:100%!important;padding:17px 15px!important}
-  .ch_avatar_modal.chac_studio .chac_editor_intro{flex-direction:row!important}
-  .ch_avatar_modal.chac_studio .chac_tabs{grid-template-columns:repeat(4,minmax(0,1fr))!important}
-  .ch_avatar_modal.chac_studio .chac_tabs button{justify-content:center!important;flex-direction:column!important;gap:4px!important;font-size:9px!important;padding:7px 3px!important}
-  .ch_avatar_modal.chac_studio .chac_color_grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
-  .ch_avatar_modal.chac_studio .chac_choice_grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
-  .ch_avatar_modal.chac_studio .chac_accessory_choices{grid-template-columns:repeat(3,minmax(0,1fr))!important}
-  .ch_avatar_modal.chac_studio .chac_choice_grid button{flex-direction:column!important;justify-content:center!important;min-height:68px!important;padding:8px 4px!important;text-align:center!important}
-  .ch_avatar_modal.chac_studio .chac_editor_footer{flex-direction:column!important;align-items:stretch!important}
-  .ch_avatar_modal.chac_studio .chac_next{width:100%!important}
-}
-@media(max-width:380px){
-  .ch_avatar_modal.chac_studio .chac_stage_buttons{grid-template-columns:minmax(0,1fr)!important}
-  .ch_avatar_modal.chac_studio .chac_color_grid{grid-template-columns:minmax(0,1fr)!important}
-  .ch_avatar_modal.chac_studio .chac_tabs button span{font-size:8px}
-}
 </style>
 <script data-cfasync="false">
 (function($){
@@ -232,52 +184,14 @@ ob_start();
   if(!root||root.getAttribute('data-chac-ready')==='1')return;
   root.setAttribute('data-chac-ready','1');
   /*
-   * Keep CodyChat's original modal and native close controls.
-   * Widen the existing modal containers instead of creating a second window.
+   * Laat CodyChat zelf de modal positioneren en de achtergrond beheren.
+   * Pas uitsluitend de breedte van de bestaande modal-container aan.
    */
-  var modalNodes=[];
-  var node=root;
-  while(node && node!==document.body && node!==document.documentElement){
-    var cls=typeof node.className==='string'?node.className:'';
-    var id=node.id||'';
-    if(node===root || /over|modal|popup|box|content/i.test(cls+' '+id)){
-      modalNodes.push(node);
-    }
-    node=node.parentElement;
-  }
-
-  /* De bestaande CodyChat-container blijft eigenaar van centrering en backdrop. */
-  var viewportWidth=Math.max(document.documentElement.clientWidth||0,window.innerWidth||0);
-  var width=Math.min(1180,Math.max(320,viewportWidth-32));
-  modalNodes.forEach(function(el){
-    if(el===root){
-      el.style.setProperty('position','relative','important');
-      el.style.setProperty('inset','auto','important');
-      el.style.setProperty('transform','none','important');
-      el.style.setProperty('width','100%','important');
-      el.style.setProperty('max-width','none','important');
-      el.style.setProperty('min-width','0','important');
-      el.style.setProperty('max-height','none','important');
-      el.style.setProperty('height','auto','important');
-      el.style.setProperty('margin','0','important');
-      el.style.setProperty('overflow','visible','important');
-      el.style.setProperty('box-shadow','none','important');
-    }else{
-      el.style.setProperty('width',width+'px','important');
-      el.style.setProperty('max-width','calc(100vw - 32px)','important');
-      el.style.setProperty('min-width','0','important');
-      el.style.setProperty('max-height','94vh','important');
-      el.style.setProperty('height','auto','important');
-      el.style.setProperty('margin-left','auto','important');
-      el.style.setProperty('margin-right','auto','important');
-      el.style.setProperty('box-sizing','border-box','important');
-      el.style.setProperty('overflow','auto','important');
-    }
-  });
-
-  /* Keep the original close area from CodyChat; the extra studio X is removed. */
-  var extraClose=root.querySelector('#chacClose');
-  if(extraClose){extraClose.remove();}
+  root.style.setProperty('width','min(1160px, calc(100vw - 40px))','important');
+  root.style.setProperty('max-width','calc(100vw - 40px)','important');
+  root.style.setProperty('max-height','calc(100vh - 40px)','important');
+  root.style.setProperty('overflow','auto','important');
+  root.style.setProperty('box-sizing','border-box','important');
   document.addEventListener('keydown',function(event){
     if(event.key==='Escape' && document.body.contains(root) && typeof hideOver==='function'){
       hideOver();

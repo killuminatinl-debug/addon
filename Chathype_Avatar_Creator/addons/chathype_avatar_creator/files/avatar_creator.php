@@ -7,8 +7,9 @@ require_once __DIR__ . '/../../../system/config_session.php';
 require_once __DIR__ . '/../system/settings.php';
 if (empty($data['user_id']) || !chathypeCreatorEnabled()) {
     http_response_code(403);
-    exit('Je moet ingelogd zijn om een avatar te maken.');
+    exit('Avatar Creator is uitgeschakeld of je bent niet ingelogd.');
 }
+start();
 ?>
 <div id="chAvatarCreator" class="chac">
   <style>
@@ -102,3 +103,4 @@ if (empty($data['user_id']) || !chathypeCreatorEnabled()) {
  draw();
 })();
 </script>
+<?php echo boomOverModal(clean(), 620); ?>

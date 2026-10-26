@@ -34,6 +34,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['chathype_avatar_enabl
     }
 }
 $current = chathypeAvatarEnabled();
+
+/* Build an URL for CodyChat root installs and subfolder installs. */
+$chacScript = isset($_SERVER["SCRIPT_NAME"]) ? str_replace("\\\\", "/", $_SERVER["SCRIPT_NAME"]) : "/index.php";
+$chacControlPos = strpos($chacScript, "/control/");
+$chacAddonPos = strpos($chacScript, "/addons/");
+if ($chacControlPos !== false) {
+    $chacBase = substr($chacScript, 0, $chacControlPos + 1);
+} elseif ($chacAddonPos !== false) {
+    $chacBase = substr($chacScript, 0, $chacAddonPos + 1);
+} else {
+    $chacBase = rtrim(str_replace("\\\\", "/", dirname($chacScript)), "/") . "/";
+    if ($chacBase === "//") $chacBase = "/";
+}
+$chacAdminUrl = $chacBase . "addons/chathype_avatar_chooser/admin.php";
+
 ?>
 <div class="modal_content">
     <div class="setting_element">
@@ -42,7 +57,7 @@ $current = chathypeAvatarEnabled();
         <?php if ($message !== '') { ?>
             <div class="sub_text" style="padding:10px 0"><?php echo htmlspecialchars($message, ENT_QUOTES, 'UTF-8'); ?></div>
         <?php } ?>
-        <form method="post" action="addons/chathype_avatar_chooser/admin.php">
+        <form method="post" action="<?php echo htmlspecialchars($chacAdminUrl, ENT_QUOTES, &quot;UTF-8&quot;); ?>">
             <label style="display:block;margin:12px 0">
                 <input type="radio" name="chathype_avatar_enabled" value="1" <?php echo $current ? 'checked' : ''; ?>>
                 Ingeschakeld

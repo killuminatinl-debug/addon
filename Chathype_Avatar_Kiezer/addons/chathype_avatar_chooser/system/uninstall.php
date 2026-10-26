@@ -13,7 +13,7 @@ if (!isset($mysqli) || !($mysqli instanceof mysqli)) {
 $table = 'chathype_avatar_chooser_backup';
 $tableCheck = $mysqli->query("SHOW TABLES LIKE '" . $mysqli->real_escape_string($table) . "'");
 if (!$tableCheck || $tableCheck->num_rows === 0) {
-    echo 'Chathype Avatar Kiezer verwijderd. Geen avatar-back-up gevonden; er kon niets automatisch worden hersteld.';
+    echo 'Chathype Avatar Kiezer verwijderd. Geen avatar-back-up gevonden; er zijn geen bekende addon-avatars om te verwijderen.';
     return;
 }
 $tableCheck->free();
@@ -25,7 +25,7 @@ if (!$rows) {
 $avatarDir = realpath(__DIR__ . '/../../../avatar');
 if (!$avatarDir || !is_dir($avatarDir)) $avatarDir = realpath(__DIR__ . '/../../../upload/avatar');
 if (!$avatarDir || !is_dir($avatarDir)) $avatarDir = realpath(__DIR__ . '/../../../uploads/avatar');
-$restore = $mysqli->prepare('UPDATE boom_users SET user_tumb = ? WHERE user_id = ? AND user_tumb = ? LIMIT 1');
+$restore = $mysqli->prepare("UPDATE boom_users SET user_tumb = '' WHERE user_id = ? AND user_tumb = ? LIMIT 1");
 if (!$restore) {
     $rows->free();
     echo 'Chathype Avatar Kiezer: herstelquery kon niet worden voorbereid; back-up is behouden.';
@@ -60,12 +60,12 @@ while ($backup = $rows->fetch_assoc()) {
 $restore->close();
 $rows->free();
 if ($failed) {
-    echo 'Herstel gedeeltelijk uitgevoerd; er waren databasefouten. Controleer de back-up voordat je opnieuw probeert.';
+    echo 'Verwijderen gedeeltelijk uitgevoerd; er waren databasefouten. De back-up is behouden zodat je opnieuw kunt proberen.';
     return;
 }
 if ($mysqli->query("DROP TABLE IF EXISTS `chathype_avatar_chooser_backup`")) {
     if (function_exists('redisUpdateAddons')) redisUpdateAddons('chathype_avatar_chooser');
-    echo 'Chathype Avatar Kiezer verwijderd. Herstelde avatars: ' . (int)$restored .
+    echo 'Chathype Avatar Kiezer verwijderd. Leeg gemaakte ledenavatars: ' . (int)$restored .
         '. Verwijderde addon-bestanden: ' . (int)$filesRemoved . '.';
 } else {
     echo 'Avatar-herstel uitgevoerd, maar de back-uptabel kon niet worden verwijderd; de back-up is behouden.';

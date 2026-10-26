@@ -1,0 +1,22 @@
+PROFILE MENU INTEGRATION — CodyChat 11
+
+1) In system/box/profile.php, after config_session.php is loaded, add:
+require_once(__DIR__ . '/../../addons/chathype_avatar_chooser/system/settings.php');
+
+2) Inside .modal_top_menu, directly after the own-profile edit button, add:
+<?php if(mySelf($user['user_id']) && function_exists('chathypeAvatarEnabled') && chathypeAvatarEnabled()){ ?>
+<div class="cover_text modal_top_item" role="button" tabindex="0" title="Kies je avatar" onclick="chathypeOpenAvatarPicker();"><i class="fa fa-user-circle"></i></div>
+<?php } ?>
+
+3) Add this script to the profile template:
+<script>
+function chathypeOpenAvatarPicker(){
+ $.post('addons/chathype_avatar_chooser/files/avatar_picker.php', {}, function(r){
+  if(typeof showEmptyModal === 'function'){ showEmptyModal(r, 620); }
+  else if(typeof overModal === 'function'){ overModal(r); }
+  else if(typeof showModal === 'function'){ showModal(r); }
+ });
+}
+</script>
+
+Ensure the files/avatar_picker.php and avatars/ directory from the full ZIP are installed at the paths shown.

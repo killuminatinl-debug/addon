@@ -3,7 +3,7 @@ header('X-Content-Type-Options: nosniff');
 header('Content-Type: text/plain; charset=utf-8');
 
 $load_addons = 'chathype_avatar_chooser';
-require(__DIR__ . '/../../../system/config_addons.php');
+require(__DIR__ . '/../../../../system/config_session.php');
 require_once __DIR__ . '/settings.php';
 
 /* Addonbeheer: alleen bevoegde beheerders mogen de instelling wijzigen. */
@@ -82,8 +82,23 @@ if (!$info || (int)$info[0] !== 360 || (int)$info[1] !== 360 || (int)$info[2] !=
     exit('AVATAR_ERROR:INVALID_IMAGE_DIMENSIONS');
 }
 
-$avatarDir = realpath(__DIR__ . '/../../../avatar');
-if (!$avatarDir || !is_dir($avatarDir) || !is_writable($avatarDir)) {
+$avatarDir = realpath(__DIR__ . '/../../../../avatar');
+if (!$avatarDir || !is_dir($avatarDir)) {
+    $candidateDirs = array(
+        realpath(__DIR__ . '/../../../../upload/avatar'),
+        realpath(__DIR__ . '/../../../../uploads/avatar'),
+        realpath(__DIR__ . '/../../../../avatar')
+    );
+    $avatarDir = false;
+    foreach ($candidateDirs as $candidate) {
+        if ($candidate && is_dir($candidate)) { $avatarDir = $candidate; break; }
+    }
+}
+if (!$avatarDir || !is_dir($avatarDir)) {
+    http_response_code(500);
+    exit('AVATAR_ERROR:AVATAR_FOLDER_NOT_FOUND');
+}
+if (!is_writable($avatarDir)) {
     http_response_code(500);
     exit('AVATAR_ERROR:AVATAR_FOLDER_NOT_WRITABLE');
 }
@@ -114,7 +129,7 @@ $ok = $stmt->execute();
 $changed = $stmt->affected_rows;
 $stmt->close();
 
-if (!$ok || $changed < 0) {
+if (!$ok) {
     http_response_code(500);
     exit('AVATAR_ERROR:USER_AVATAR_UPDATE_FAILED');
 }

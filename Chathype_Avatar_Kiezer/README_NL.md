@@ -1,14 +1,18 @@
 # Chathype Avatar Kiezer — CodyChat 11
 
-Deze map bevat de bronbestanden van de avatar-kiezer. Compatibiliteit: PHP 7.4+.
+Deze addon volgt de normale CodyChat addonstructuur, zoals Avatar Frame BLK.
+
+- `system/install.php` levert de metadata waarmee CodyChat de addon registreert en in Admin → Addons toont.
+- `system/config.php` is het beheerscherm in de ingebouwde Addons-manager.
+- `system/action.php` slaat de aan/uit-instelling op in `boom_addons.custom1` en verwerkt avatarselecties.
+- `system/settings.php` leest de instelling.
+- `files/avatar_picker.php` toont de 40 avatars.
 
 ## Installatie
-1. Kopieer de map `addons/chathype_avatar_chooser` uit de volledige ZIP naar de `addons`-map van CodyChat.
-2. Voeg de profielknop uit `profile_menu_insert.php.txt` toe aan `system/box/profile.php` in het eigen-profielmenu.
-3. Geef de map `/avatar` schrijfrechten voor PHP.
-4. Open de beheerpagina via de CodyChat-beheeromgeving nadat de addon is gekoppeld.
+1. Upload `addons/chathype_avatar_chooser` naar je CodyChat-installatie.
+2. Ga naar Admin → Addons en gebruik de normale addon-installatie. De addon-slug is `chathype_avatar_chooser`.
+3. Integreer de knop uit `profile_menu_insert.php.txt` in `system/box/profile.php`, of gebruik de meegeleverde profielintegratie in de ZIP.
+4. Zorg dat de map `/avatar` schrijfbaar is voor PHP.
+5. Open Admin → Addons → Chathype Avatar Kiezer en schakel de functie in.
 
-**Let op:** deze repository-bronmap bevat de PHP-integratiebestanden. De 40 PNG-avatarbestanden zitten in de ZIP-download die in deze chat is geleverd; plaats ze in `addons/chathype_avatar_chooser/avatars/`.
-
-## Controle
-Controleer de installatie eerst op een testkopie. Live testen op de Hostinger-installatie is niet uitgevoerd.
+De broncode is syntax-gecontroleerd, maar niet live getest op de Hostinger-installatie.

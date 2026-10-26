@@ -100,18 +100,18 @@ $avatarEnabled = isset($addons['custom1']) ? ((string)$addons['custom1'] !== '0'
     var enabled=$toggle.is(':checked')?'1':'0';
     $button.prop('disabled',true).html('<i class="fa fa-spinner fa-spin"></i> Opslaan…');
     $status.removeClass('ok error').text('Instellingen worden opgeslagen…');
-    $.ajax({url:'addons/chathype_avatar_chooser/system/action.php',method:'POST',data:{save_avatar_setting:1,chathype_avatar_enabled:enabled},cache:false,dataType:'text'})
+    $.ajax({url:(typeof getChatPath==='function'?getChatPath():'')+'addons/chathype_avatar_chooser/system/action.php',method:'POST',data:{save_avatar_setting:1,chathype_avatar_enabled:enabled},cache:false,dataType:'text'})
     .done(function(response){
       if(String(response).trim()==='5'){
         $status.removeClass('error').addClass('ok').text('✓ Instellingen opgeslagen. De wijziging is direct actief.');
         paintState(enabled==='1');
         if(typeof callSuccess==='function'&&typeof system!=='undefined')callSuccess(system.saved||'Opgeslagen');
       }else{
-        $status.removeClass('ok').addClass('error').text('Opslaan mislukt. De server heeft de instelling niet bevestigd.');
+        $status.removeClass('ok').addClass('error').text('Opslaan mislukt: '+String(response).trim().substring(0,180));
         if(typeof callError==='function'&&typeof system!=='undefined')callError(system.error||'Fout');
       }
     }).fail(function(xhr){
-      $status.removeClass('ok').addClass('error').text('Opslaan mislukt (HTTP '+xhr.status+'). Controleer de addon-installatie en PHP-errorlog.');
+      $status.removeClass('ok').addClass('error').text('Opslaan mislukt (HTTP '+xhr.status+'): '+String(xhr.responseText||'geen servermelding').trim().substring(0,180));
       if(typeof callError==='function'&&typeof system!=='undefined')callError(system.error||'Fout');
     }).always(function(){
       $button.prop('disabled',false).html('<i class="fa fa-floppy-o"></i> Instellingen opslaan');

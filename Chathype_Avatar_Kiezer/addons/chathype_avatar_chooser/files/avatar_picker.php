@@ -10,7 +10,7 @@ ob_start();
 <div class="ch_avatar_modal chac_studio" data-action-path="addons/chathype_avatar_chooser/system/action.php" data-chac-ready="0">
   <header class="chac_topbar">
     <div class="chac_brand"><span class="chac_brandmark"><i class="fa fa-magic"></i></span><span><strong>Chathype Avatar Studio</strong><small>Jouw look. Jouw stijl.</small></span></div>
-    <span class="chac_live"><i></i> LIVE VOORBEELD</span>
+    <div class="chac_topbar_actions"><span class="chac_live"><i></i> LIVE VOORBEELD</span><button type="button" class="chac_close" id="chacClose" aria-label="Avatarvenster sluiten" title="Sluiten"><i class="fa fa-times" aria-hidden="true"></i></button></div>
   </header>
   <div class="chac_workspace">
     <aside class="chac_stage">
@@ -116,7 +116,7 @@ ob_start();
 .ch_avatar_modal.chac_studio *{box-sizing:border-box}
 .ch_avatar_modal.chac_studio button,.ch_avatar_modal.chac_studio input{font:inherit}
 .chac_topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:18px 23px;background:#fff;border-bottom:1px solid var(--chac-line)}
-.chac_brand{display:flex;align-items:center;gap:11px;min-width:0}.chac_brandmark{display:flex;align-items:center;justify-content:center;flex:0 0 42px;width:42px;height:42px;border-radius:14px;background:#fffc00;color:#171923;font-size:19px}
+.chac_topbar_actions{display:flex;align-items:center;gap:10px;flex:0 0 auto}.chac_close{display:flex!important;align-items:center;justify-content:center;width:36px;height:36px;flex:0 0 36px;margin:0!important;padding:0!important;border:1px solid #e5e6ef!important;border-radius:10px!important;background:#fff!important;color:#52536a!important;font-size:17px!important;line-height:1!important;cursor:pointer}.chac_close:hover{background:#f3f1ff!important;color:#6558e8!important}.chac_brand{display:flex;align-items:center;gap:11px;min-width:0}.chac_brandmark{display:flex;align-items:center;justify-content:center;flex:0 0 42px;width:42px;height:42px;border-radius:14px;background:#fffc00;color:#171923;font-size:19px}
 .chac_brand strong,.chac_brand small{display:block}.chac_brand strong{font-size:15px;font-weight:900;letter-spacing:-.25px}.chac_brand small{margin-top:2px;font-size:11px;color:var(--chac-muted)}
 .chac_live{display:flex;align-items:center;gap:7px;flex:0 0 auto;padding:7px 10px;border:1px solid #e6e6f0;border-radius:30px;color:#73748a;font-size:9px;font-weight:900;letter-spacing:.8px}.chac_live i,.chac_online_dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:#22c58b;box-shadow:0 0 0 3px #e3fbf1}
 .chac_workspace{display:grid;grid-template-columns:minmax(265px,.82fr) minmax(0,1.18fr);align-items:stretch;gap:0}
@@ -125,8 +125,8 @@ ob_start();
 .chac_avatar_stage{position:relative;display:flex;align-items:center;justify-content:center;isolation:isolate;overflow:hidden;width:100%;aspect-ratio:1/1;min-height:240px;border:1px solid rgba(255,255,255,.85);border-radius:22px;background:linear-gradient(145deg,#fffcdf,#e6e3ff 75%);box-shadow:0 10px 28px rgba(64,54,130,.08)}
 .chac_avatar_stage:before{content:"";position:absolute;z-index:-1;width:76%;aspect-ratio:1;border-radius:50%;background:rgba(255,255,255,.7);box-shadow:0 0 0 16px rgba(255,255,255,.2)}
 .chac_stage_orbit{position:absolute;z-index:-1;border:1px solid rgba(113,101,222,.16);border-radius:50%;pointer-events:none}.chac_orbit_one{width:88%;aspect-ratio:1}.chac_orbit_two{width:108%;aspect-ratio:1}
-.chac_avatar_svg{position:relative;width:100%;max-width:390px;z-index:1;line-height:0}.chac_avatar_svg svg{display:block;width:100%;height:auto;overflow:visible;filter:drop-shadow(0 12px 9px rgba(48,43,86,.12))}
-.chac_stage_tag{position:absolute;left:12px;bottom:12px;display:flex;align-items:center;gap:6px;padding:7px 9px;border:1px solid rgba(255,255,255,.8);border-radius:9px;background:rgba(255,255,255,.8);color:#6259a8;font-size:9px;font-weight:900;letter-spacing:.7px;backdrop-filter:blur(8px)}
+.chac_avatar_svg{position:relative;display:flex;align-items:center;justify-content:center;width:100%;max-width:390px;z-index:1;line-height:0;pointer-events:none}.chac_avatar_svg svg{display:block;width:100%;height:auto;max-height:100%;overflow:visible}.chac_avatar_svg svg{display:block;width:100%;height:auto;overflow:visible;filter:drop-shadow(0 12px 9px rgba(48,43,86,.12))}
+.chac_stage_tag{position:absolute;z-index:3;left:12px;bottom:12px;pointer-events:none;display:flex;align-items:center;gap:6px;padding:7px 9px;border:1px solid rgba(255,255,255,.8);border-radius:9px;background:rgba(255,255,255,.8);color:#6259a8;font-size:9px;font-weight:900;letter-spacing:.7px;backdrop-filter:blur(8px)}
 .chac_stage_caption{display:flex;align-items:center;justify-content:center;gap:9px;margin:13px 0 16px;color:#77778e;font-size:11px;text-align:center}.chac_online_dot{width:6px;height:6px;box-shadow:none;flex:0 0 6px}
 .chac_stage_buttons{display:grid;grid-template-columns:minmax(0,.92fr) minmax(0,1.3fr);gap:8px}
 .chac_btn{display:flex!important;align-items:center;justify-content:center;gap:7px;min-width:0;min-height:44px;margin:0!important;padding:10px 11px!important;border:1px solid transparent!important;border-radius:12px!important;font-size:11px!important;font-weight:850!important;line-height:1.3;white-space:normal;cursor:pointer;transition:transform .16s,box-shadow .16s,background .16s}
@@ -212,7 +212,7 @@ ob_start();
       host.style.setProperty('box-shadow','none','important');
     }
   }
-  document.addEventListener('keydown',function(event){
+  var closeButton=root.querySelector('#chacClose');\n  if(closeButton){closeButton.addEventListener('click',function(){if(typeof hideOver==='function'){hideOver()}else if(root.parentNode){root.parentNode.removeChild(root)}})}\n  document.addEventListener('keydown',function(event){
     if(event.key==='Escape' && document.body.contains(root) && typeof hideOver==='function'){
       hideOver();
     }

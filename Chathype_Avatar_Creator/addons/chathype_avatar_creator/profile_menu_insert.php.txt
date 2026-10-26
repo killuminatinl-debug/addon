@@ -1,21 +1,46 @@
-PROFILE MENU INTEGRATION — CodyChat 11
+PROFIEL-INTEGRATIE — CodyChat 11 (vervangt de oude Avatar Kiezer)
 
-1) In system/box/profile.php, after config_session.php is loaded, add:
+1) Open system/box/profile.php.
+
+2) Vervang deze oude include:
+require_once(__DIR__ . '/../../addons/chathype_avatar_chooser/system/settings.php');
+
+Door:
 require_once(__DIR__ . '/../../addons/chathype_avatar_creator/system/settings.php');
 
-2) Inside the profile modal menu for the logged-in user's OWN profile, add:
+3) Vervang de oude avatar-knop die chathypeAvatarEnabled() en #chathype_open_avatar_picker gebruikt door dit blok, op dezelfde plek boven de sluitknop van het profiel:
+
 <?php if(mySelf($user['user_id']) && function_exists('chathypeCreatorEnabled') && chathypeCreatorEnabled()){ ?>
-<div class="cover_text modal_top_item" role="button" tabindex="0" title="Maak je eigen avatar" onclick="chathypeOpenAvatarCreator();"><i class="fa fa-magic"></i></div>
+<div class="cover_text modal_top_item" id="chathype_open_avatar_creator" role="button" tabindex="0" title="Maak je eigen avatar" aria-label="Maak je eigen avatar">
+  <i class="fa fa-magic"></i>
+</div>
 <?php } ?>
 
-3) Add this script to the profile template:
-<script>
-function chathypeOpenAvatarCreator(){
- $.post('addons/chathype_avatar_creator/files/avatar_creator.php', {}, function(r){
-  if(typeof overModal === 'function') overModal(r);
-  else if(typeof showEmptyModal === 'function') showEmptyModal(r, 620);
- });
-}
+4) Verwijder het oude script dat addons/chathype_avatar_chooser/files/avatar_picker.php opent en vervang het door:
+
+<script data-cfasync="false">
+(function($){
+  function openChathypeAvatarCreator(){
+    $.post('addons/chathype_avatar_creator/files/avatar_creator.php', {}, function(response){
+      if(typeof showEmptyModal === 'function') showEmptyModal(response, 620);
+      else if(typeof overModal === 'function') overModal(response);
+      else if(typeof showModal === 'function') showModal(response);
+    }).fail(function(){
+      if(typeof callError === 'function' && typeof system !== 'undefined') callError(system.error);
+    });
+  }
+  $(document).off('click.chathypecreator keydown.chathypecreator', '#chathype_open_avatar_creator')
+    .on('click.chathypecreator keydown.chathypecreator', '#chathype_open_avatar_creator', function(e){
+      if(e.type === 'click' || e.key === 'Enter' || e.key === ' '){
+        e.preventDefault();
+        openChathypeAvatarCreator();
+      }
+    });
+})(jQuery);
 </script>
 
-Install the complete addons/chathype_avatar_creator directory. The admin toggle appears under Admin → Addons after installing it with CodyChat's normal addon installer. This is an integration snippet for the profile template; it does not edit your CodyChat core automatically.
+Belangrijk:
+- Kopieer de map addons/chathype_avatar_creator naar de addons-map van CodyChat.
+- Installeer de addon via Admin → Addons.
+- Zet hem aan via Admin → Addons → Chathype Avatar Creator.
+- Deze wijziging vervangt alleen de oude profielknop/integratie; verwijder de oude addon pas nadat je hebt gecontroleerd dat de nieuwe werkt.

@@ -37,7 +37,42 @@ ob_start();
     </div>
 </div>
 <style>
-.ch_avatar_modal{padding:22px!important;max-height:88vh;overflow:auto;background:linear-gradient(145deg,rgba(17,24,39,.98),rgba(30,41,59,.98));color:#f8fafc;border-radius:22px;border:1px solid rgba(255,255,255,.12);box-shadow:0 28px 90px rgba(0,0,0,.4)}.chac_head{display:flex;align-items:center;gap:12px;margin:4px 0 20px;padding-right:8px}.chac_icon{width:44px;height:44px;flex:0 0 44px;border-radius:14px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:22px;background:linear-gradient(135deg,#6366f1,#ec4899 60%,#06b6d4);box-shadow:0 5px 20px #6366f144}.chac_title{font-size:21px;font-weight:850;letter-spacing:-.4px}.chac_sub{font-size:12px;color:#a5b4fc;margin-top:4px}.chac_layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.12fr);gap:20px;align-items:start}.chac_preview{position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;border-radius:24px;background:radial-gradient(ellipse at 50% 22%,#f8fafc 0%,#e0e7ff 34%,#a5b4fc 72%,#6366f1 100%);max-width:100%;border:1px solid rgba(255,255,255,.32);box-shadow:inset 0 0 48px rgba(255,255,255,.38),0 18px 45px rgba(0,0,0,.22)}.chac_preview canvas{display:block;width:100%;max-width:420px;height:auto;filter:drop-shadow(0 12px 13px rgba(15,23,42,.12))}.chac_controls{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;align-content:start;padding:2px}.chac_wide{grid-column:1/-1}.chac_swatches{display:flex;gap:9px;flex-wrap:wrap}.chac_swatches button{width:28px;height:28px;border-radius:50%;background:var(--sw);border:2px solid rgba(255,255,255,.35);box-shadow:0 0 0 2px rgba(15,23,42,.4);cursor:pointer}.chac_swatches button.is_active{outline:2px solid #a5b4fc;outline-offset:3px}.chac_options button:hover{border-color:#a5b4fc;transform:translateY(-1px)}.chac_group{min-width:0;padding:13px;border:1px solid rgba(148,163,184,.22);border-radius:15px;background:linear-gradient(145deg,rgba(255,255,255,.075),rgba(255,255,255,.025));box-shadow:0 6px 18px rgba(0,0,0,.1)}.chac_group label{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.7px;color:#cbd5e1;font-weight:800;margin-bottom:8px}.chac_group input[type=color]{width:100%;height:36px;min-height:36px;padding:2px;border-radius:6px}.chac_options{display:flex;flex-wrap:wrap;gap:5px}.chac_options button{border:1px solid rgba(148,163,184,.28);border-radius:10px;padding:8px 10px;background:rgba(15,23,42,.72);color:#e2e8f0;font-size:12px;cursor:pointer;transition:background .15s,border-color .15s,transform .15s}.chac_options button.is_active{background:#6366f1;color:#fff;border-color:#6366f1;box-shadow:0 2px 8px #6366f144}.chac_actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.chac_btn{border:0;border-radius:11px;padding:12px 14px;cursor:pointer;font-weight:800;background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;box-shadow:0 8px 20px rgba(99,102,241,.25);transition:transform .15s,filter .15s}.chac_btn:hover{filter:brightness(1.06)}.chac_btn:disabled{opacity:.6;cursor:wait}.chac_secondary{background:rgba(148,163,184,.16);box-shadow:none;border:1px solid rgba(203,213,225,.2)}.chac_status{min-height:18px;margin-top:10px;font-size:12px;color:#cbd5e1;overflow-wrap:anywhere}.chac_status.error{color:#fca5a5}.chac_status.ok{color:#86efac}@media(max-width:720px){.ch_avatar_modal{padding:15px!important;border-radius:16px}.chac_layout{grid-template-columns:1fr}.chac_preview{max-width:420px;margin:auto;width:100%}.chac_controls{grid-template-columns:repeat(2,minmax(0,1fr))}.chac_btn{flex:1}.chac_title{font-size:19px}}
+.ch_avatar_modal{box-sizing:border-box;width:100%;padding:24px!important;max-height:90vh;overflow:auto;background:#f8f8fc;color:#171923;border-radius:26px;border:1px solid #e8e8f0;box-shadow:0 28px 100px rgba(18,20,40,.32);font-family:inherit}
+.ch_avatar_modal *{box-sizing:border-box}
+.chac_head{display:flex;align-items:center;gap:14px;margin:0 0 22px;padding:0 0 18px;border-bottom:1px solid #e7e7ef}
+.chac_icon{width:52px;height:52px;flex:0 0 52px;border-radius:18px;display:flex;align-items:center;justify-content:center;color:#161616;font-size:25px;background:#fffc00;box-shadow:0 7px 18px rgba(25,25,25,.1)}
+.chac_title{font-size:clamp(20px,2.4vw,27px);font-weight:900;letter-spacing:-.8px;color:#171923;line-height:1.15}
+.chac_sub{font-size:13px;color:#717184;margin-top:6px;line-height:1.45}
+.chac_layout{display:grid;grid-template-columns:minmax(260px,.9fr) minmax(0,1.2fr);gap:24px;align-items:start}
+.chac_preview_col{position:sticky;top:0;min-width:0}
+.chac_preview{position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;border-radius:26px;background:radial-gradient(ellipse at 50% 28%,#fff 0%,#fff9b8 30%,#ffec00 72%,#f6db00 100%);max-width:100%;border:1px solid rgba(20,20,20,.06);box-shadow:inset 0 0 0 8px rgba(255,255,255,.22),0 16px 35px rgba(25,25,25,.11)}
+.chac_preview:before{content:"";position:absolute;width:78%;aspect-ratio:1;border-radius:50%;background:rgba(255,255,255,.34);top:9%;left:11%;pointer-events:none}
+.chac_preview canvas{position:relative;z-index:1;display:block;width:100%;max-width:420px;height:auto;filter:drop-shadow(0 12px 13px rgba(15,23,42,.12))}
+.chac_actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.chac_btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:46px;border:0;border-radius:14px;padding:12px 17px;cursor:pointer;font-size:13px;font-weight:850;background:#171923;color:#fff;box-shadow:0 7px 15px rgba(20,20,30,.13);transition:transform .15s,box-shadow .15s,background .15s}
+.chac_btn:hover{transform:translateY(-2px);box-shadow:0 10px 20px rgba(20,20,30,.17)}
+.chac_btn:focus-visible,.chac_options button:focus-visible,.chac_swatches button:focus-visible{outline:3px solid #6366f1;outline-offset:3px}
+.chac_btn:disabled{opacity:.6;cursor:wait;transform:none}
+.chac_btn:not(.chac_secondary){background:#171923;color:#fff}
+.chac_secondary{background:#fff;color:#28283a;box-shadow:none;border:1px solid #dedee8}
+.chac_status{min-height:20px;margin-top:11px;font-size:12px;color:#717184;overflow-wrap:anywhere}
+.chac_status.error{color:#c62845}.chac_status.ok{color:#16834a}
+.chac_controls{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;align-content:start;min-width:0}
+.chac_wide{grid-column:1/-1}
+.chac_group{min-width:0;padding:15px;border:1px solid #e5e5ee;border-radius:17px;background:#fff;box-shadow:0 5px 16px rgba(25,25,45,.035)}
+.chac_group label{display:flex;align-items:center;gap:7px;font-size:11px;text-transform:uppercase;letter-spacing:1px;color:#777789;font-weight:900;margin:0 0 11px}
+.chac_group input[type=color]{display:block;width:100%;height:42px;min-height:42px;padding:4px;border:1px solid #e2e2ec;border-radius:11px;background:#fff;cursor:pointer}
+.chac_swatches{display:flex;gap:12px;flex-wrap:wrap;padding:3px 2px 5px}
+.chac_swatches button{width:32px;height:32px;flex:0 0 32px;border-radius:50%;background:var(--sw);border:3px solid #fff;box-shadow:0 0 0 1px #d7d7e2;cursor:pointer;transition:transform .15s,box-shadow .15s}
+.chac_swatches button:hover{transform:scale(1.1)}
+.chac_swatches button.is_active{box-shadow:0 0 0 3px #171923;transform:scale(1.04)}
+.chac_options{display:flex;flex-wrap:wrap;gap:7px}
+.chac_options button{appearance:none;border:1px solid #e3e3ed;border-radius:11px;padding:9px 12px;min-height:36px;background:#f7f7fb;color:#424255;font-size:12px;font-weight:750;cursor:pointer;transition:background .15s,border-color .15s,transform .15s,color .15s}
+.chac_options button:hover{border-color:#b8b8c8;background:#fff;transform:translateY(-1px)}
+.chac_options button.is_active{background:#171923;color:#fff;border-color:#171923;box-shadow:0 4px 9px rgba(23,25,35,.12)}
+.chac_group.chac_choices:nth-child(7) .chac_options button{min-width:64px}
+@media(max-width:760px){.ch_avatar_modal{padding:16px!important;max-height:92vh;border-radius:20px}.chac_head{gap:11px;margin-bottom:16px;padding-bottom:14px}.chac_icon{width:44px;height:44px;flex-basis:44px;border-radius:14px}.chac_layout{grid-template-columns:1fr;gap:17px}.chac_preview_col{position:relative}.chac_preview{max-width:390px;margin:auto;width:100%}.chac_controls{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.chac_group{padding:12px;border-radius:14px}.chac_btn{flex:1}.chac_options button{padding:8px 10px}}
+@media(max-width:390px){.chac_controls{grid-template-columns:1fr}.chac_wide{grid-column:auto}.chac_actions{flex-direction:column}.chac_btn{width:100%}.chac_title{font-size:20px}}
 </style>
 <script data-cfasync="false">
 (function($){

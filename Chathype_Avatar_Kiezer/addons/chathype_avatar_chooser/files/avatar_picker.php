@@ -37,6 +37,7 @@ ob_start();
         <button type="button" data-tab="details"><i class="fa fa-star"></i><span>Details</span></button>
       </div>
       <section class="chac_panel is_active" data-panel="look">
+        <input type="hidden" id="chacSkin" value="#d99a70">
         <div class="chac_section_title"><div><h3>Huidskleur</h3><p>Kies de tint die bij je past.</p></div><span class="chac_section_icon">◉</span></div>
         <div class="chac_swatches" data-input="Skin">
           <button type="button" data-color="#ffe0c8" style="--sw:#ffe0c8" aria-label="Licht" title="Licht"></button>

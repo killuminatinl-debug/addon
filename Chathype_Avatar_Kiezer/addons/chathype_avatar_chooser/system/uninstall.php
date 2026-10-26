@@ -1,66 +1,72 @@
 <?php
 /*
- * Chathype Avatar Kiezer — veilige CodyChat 11 uninstall.
- * Zet de oorspronkelijke profielfoto terug voor gebruikers waarvan de avatar
- * door deze addon is vervangen. Verwijdert alleen bestanden van deze addon.
+ * Chathype Avatar Kiezer — CodyChat 11 uninstall.
+ * Herstelt opgeslagen originele avatars en verwijdert alleen eigen avatarbestanden.
  */
 if (!defined('BOOM')) {
     require_once __DIR__ . '/../../../system/config_addons.php';
 }
-
 if (!isset($mysqli) || !($mysqli instanceof mysqli)) {
-    echo 'Chathype Avatar Kiezer: database niet beschikbaar; er zijn geen gegevens verwijderd.';
+    echo 'Chathype Avatar Kiezer: database niet beschikbaar; back-up is behouden.';
     return;
 }
-
 $table = 'chathype_avatar_chooser_backup';
 $tableCheck = $mysqli->query("SHOW TABLES LIKE '" . $mysqli->real_escape_string($table) . "'");
-if ($tableCheck && $tableCheck->num_rows > 0) {
-    $rows = $mysqli->query("SELECT user_id, original_avatar, custom_avatar FROM `chathype_avatar_chooser_backup`");
-    if ($rows) {
-        $avatarDir = realpath(__DIR__ . '/../../../avatar');
-        if (!$avatarDir || !is_dir($avatarDir)) {
-            $avatarDir = realpath(__DIR__ . '/../../../upload/avatar');
+if (!$tableCheck || $tableCheck->num_rows === 0) {
+    echo 'Chathype Avatar Kiezer verwijderd. Geen avatar-back-up gevonden; er kon niets automatisch worden hersteld.';
+    return;
+}
+$tableCheck->free();
+$rows = $mysqli->query("SELECT user_id, original_avatar, custom_avatar FROM `chathype_avatar_chooser_backup`");
+if (!$rows) {
+    echo 'Chathype Avatar Kiezer: back-up kon niet worden gelezen en is behouden.';
+    return;
+}
+$avatarDir = realpath(__DIR__ . '/../../../avatar');
+if (!$avatarDir || !is_dir($avatarDir)) $avatarDir = realpath(__DIR__ . '/../../../upload/avatar');
+if (!$avatarDir || !is_dir($avatarDir)) $avatarDir = realpath(__DIR__ . '/../../../uploads/avatar');
+$restore = $mysqli->prepare('UPDATE boom_users SET user_tumb = ? WHERE user_id = ? AND user_tumb = ? LIMIT 1');
+if (!$restore) {
+    $rows->free();
+    echo 'Chathype Avatar Kiezer: herstelquery kon niet worden voorbereid; back-up is behouden.';
+    return;
+}
+$restored = 0;
+$filesRemoved = 0;
+$failed = false;
+while ($backup = $rows->fetch_assoc()) {
+    $uid = isset($backup['user_id']) ? (int)$backup['user_id'] : 0;
+    $original = isset($backup['original_avatar']) ? (string)$backup['original_avatar'] : '';
+    $custom = isset($backup['custom_avatar']) ? (string)$backup['custom_avatar'] : '';
+    // Alleen addon-bestandsnamen herstellen; overschrijf geen later gekozen gewone avatar.
+    $isCustom = ($uid > 0 && $custom !== '' && basename($custom) === $custom &&
+        strpos($custom, 'chathype_custom_' . $uid . '_') === 0);
+    if ($isCustom) {
+        $restore->bind_param('sis', $original, $uid, $custom);
+        if (!$restore->execute()) {
+            $failed = true;
+            continue;
         }
-        if (!$avatarDir || !is_dir($avatarDir)) {
-            $avatarDir = realpath(__DIR__ . '/../../../uploads/avatar');
+        if ($restore->affected_rows > 0) {
+            $restored++;
+            if (function_exists('redisUpdateUser')) redisUpdateUser($uid);
         }
-
-        $restore = $mysqli->prepare(
-            'UPDATE boom_users SET user_tumb = ? WHERE user_id = ? AND user_tumb = ? LIMIT 1'
-        );
-        while ($backup = $rows->fetch_assoc()) {
-            $uid = isset($backup['user_id']) ? (int)$backup['user_id'] : 0;
-            $original = isset($backup['original_avatar']) ? (string)$backup['original_avatar'] : '';
-            $custom = isset($backup['custom_avatar']) ? (string)$backup['custom_avatar'] : '';
-            if ($uid > 0 && $custom !== '' && $restore) {
-                // Alleen terugzetten als de gebruiker nog steeds de addon-avatar gebruikt.
-                $restore->bind_param('sis', $original, $uid, $custom);
-                $restore->execute();
-                if (function_exists('redisUpdateUser')) {
-                    redisUpdateUser($uid);
-                }
-            }
-
-            // Verwijder uitsluitend bestanden die aantoonbaar door deze addon zijn aangemaakt.
-            if ($avatarDir && $custom !== '' &&
-                basename($custom) === $custom &&
-                strpos($custom, 'chathype_custom_' . $uid . '_') === 0) {
-                $file = $avatarDir . DIRECTORY_SEPARATOR . $custom;
-                if (is_file($file)) {
-                    @unlink($file);
-                }
-            }
+        if ($avatarDir) {
+            $file = $avatarDir . DIRECTORY_SEPARATOR . $custom;
+            if (is_file($file) && @unlink($file)) $filesRemoved++;
         }
-        if ($restore) {
-            $restore->close();
-        }
-        $rows->free();
-    }
-    $mysqli->query("DROP TABLE IF EXISTS `chathype_avatar_chooser_backup`");
-    if (function_exists('redisUpdateAddons')) {
-        redisUpdateAddons('chathype_avatar_chooser');
     }
 }
-
-echo 'Chathype Avatar Kiezer verwijderd. Opgeslagen oorspronkelijke avatars zijn teruggezet.';
+$restore->close();
+$rows->free();
+if ($failed) {
+    echo 'Herstel gedeeltelijk uitgevoerd; er waren databasefouten. Controleer de back-up voordat je opnieuw probeert.';
+    return;
+}
+if ($mysqli->query("DROP TABLE IF EXISTS `chathype_avatar_chooser_backup`")) {
+    if (function_exists('redisUpdateAddons')) redisUpdateAddons('chathype_avatar_chooser');
+    echo 'Chathype Avatar Kiezer verwijderd. Herstelde avatars: ' . (int)$restored .
+        '. Verwijderde addon-bestanden: ' . (int)$filesRemoved . '.';
+} else {
+    echo 'Avatar-herstel uitgevoerd, maar de back-uptabel kon niet worden verwijderd; de back-up is behouden.';
+}

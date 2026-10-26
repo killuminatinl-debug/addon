@@ -39,7 +39,7 @@ ob_start();
       <section class="chac_panel is_active" data-panel="look">
         <input type="hidden" id="chacSkin" value="#d99a70">
         <div class="chac_section_title"><div><h3>Huidskleur</h3><p>Kies de tint die bij je past.</p></div><span class="chac_section_icon">◉</span></div>
-        <div class="chac_swatches" data-input="Skin">
+        <div class="chac_swatches" data-input="Skin" role="group" aria-label="Kies je huidskleur">
           <button type="button" data-color="#ffe0c8" style="--sw:#ffe0c8" aria-label="Licht" title="Licht"></button>
           <button type="button" data-color="#f3c5a0" style="--sw:#f3c5a0" aria-label="Perzik" title="Perzik"></button>
           <button type="button" data-color="#d99a70" style="--sw:#d99a70" aria-label="Warm" title="Warm"></button>
@@ -48,9 +48,9 @@ ob_start();
           <button type="button" data-color="#623b2b" style="--sw:#623b2b" aria-label="Donker" title="Donker"></button>
         </div>
         <div class="chac_divider"></div>
-        <div class="chac_color_grid">
-          <label class="chac_color_control"><span><i class="chac_color_dot" style="background:#3b2419"></i>Haarkleur</span><input id="chacHair" type="color" value="#3b2419"></label>
-          <label class="chac_color_control"><span><i class="chac_color_dot" style="background:#3867a8"></i>Oogkleur</span><input id="chacEyes" type="color" value="#3867a8"></label>
+        <div class="chac_color_grid chac_appearance_colors">
+          <label class="chac_color_control"><span><i class="chac_color_dot" style="background:#3b2419"></i><span><strong>Haarkleur</strong><small>Kies je basiskleur</small></span></span><input id="chacHair" type="color" value="#3b2419" aria-label="Haarkleur kiezen"></label>
+          <label class="chac_color_control"><span><i class="chac_color_dot" style="background:#3867a8"></i><span><strong>Oogkleur</strong><small>Maak je look af</small></span></span><input id="chacEyes" type="color" value="#3867a8" aria-label="Oogkleur kiezen"></label>
         </div>
       </section>
       <section class="chac_panel" data-panel="hair">
@@ -179,6 +179,28 @@ ob_start();
 
 .chac_topbar{position:relative;padding-right:62px!important}.chac_close{position:absolute!important;top:12px!important;right:12px!important;z-index:999999!important;display:flex!important;align-items:center!important;justify-content:center!important;width:38px!important;height:38px!important;min-width:38px!important;min-height:38px!important;margin:0!important;padding:0!important;border:1px solid #d9dbea!important;border-radius:10px!important;background:#fff!important;color:#303047!important;font-family:Arial,sans-serif!important;font-size:29px!important;font-weight:400!important;line-height:1!important;opacity:1!important;visibility:visible!important;cursor:pointer!important;box-shadow:0 2px 8px rgba(20,20,50,.12)!important}.chac_close span{display:block!important;line-height:1!important;transform:translateY(-1px);pointer-events:none!important}.chac_topbar_actions{padding-right:38px!important}
 .chac_topbar_actions{display:flex!important;align-items:center!important;justify-content:flex-end!important;gap:10px!important;flex:0 0 auto!important;position:relative!important;z-index:1000000!important}.chac_close{position:static!important;inset:auto!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;gap:6px!important;width:auto!important;min-width:38px!important;height:38px!important;min-height:38px!important;flex:0 0 auto!important;margin:0!important;padding:0 10px!important;border:1px solid #d9dbea!important;border-radius:10px!important;background:#fff!important;color:#303047!important;font-family:Arial,sans-serif!important;font-size:13px!important;font-weight:700!important;line-height:1!important;opacity:1!important;visibility:visible!important;cursor:pointer!important;box-shadow:0 2px 8px rgba(20,20,50,.12)!important}.chac_close_icon{display:block!important;font-size:25px!important;font-weight:400!important;line-height:1!important;pointer-events:none!important}.chac_close_text{display:inline!important;font-size:12px!important;white-space:nowrap!important;pointer-events:none!important}@media(max-width:420px){.chac_topbar_actions{gap:6px!important}.chac_live{font-size:7px!important;padding:5px!important}.chac_close{padding:0 8px!important}}
+
+/* Gerichte verbeteringen voor het paneel Uiterlijk */
+.chac_panel[data-panel="look"]{padding:2px 0 8px}
+.chac_panel[data-panel="look"] .chac_section_title{margin-bottom:16px}
+.chac_panel[data-panel="look"] .chac_swatches{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px;align-items:center;padding:8px 4px 12px}
+.chac_panel[data-panel="look"] .chac_swatches button{width:100%;height:auto;aspect-ratio:1;min-width:0;min-height:34px;max-width:42px;justify-self:center;border-width:3px}
+.chac_panel[data-panel="look"] .chac_swatches button.is_active{box-shadow:0 0 0 3px #6558e8,0 4px 10px rgba(101,88,232,.18);transform:scale(1.06)}
+.chac_appearance_colors{gap:12px}
+.chac_appearance_colors .chac_color_control{min-height:72px;padding:12px 13px;background:linear-gradient(145deg,#fff,#fafaff);border-color:#e5e6f2;box-shadow:0 3px 12px rgba(35,35,75,.035)}
+.chac_appearance_colors .chac_color_control>span{gap:10px;font-size:11px}
+.chac_appearance_colors .chac_color_control>span>span{display:flex;flex-direction:column;gap:3px}
+.chac_appearance_colors .chac_color_control strong{font-size:11px;color:#414158}
+.chac_appearance_colors .chac_color_control small{font-size:9px;font-weight:500;color:#9293a5}
+.chac_appearance_colors .chac_color_dot{width:16px;height:16px;flex-basis:16px}
+.chac_appearance_colors .chac_color_control input[type=color]{width:34px;height:34px;flex-basis:34px}
+@media(max-width:650px){
+ .chac_panel[data-panel="look"] .chac_swatches{gap:10px;padding-left:2px;padding-right:2px}
+ .chac_appearance_colors{grid-template-columns:minmax(0,1fr)}
+ .chac_appearance_colors .chac_color_control{min-height:60px}
+}
+@media(max-width:360px){.chac_panel[data-panel="look"] .chac_swatches{grid-template-columns:repeat(3,minmax(0,1fr))}}
+
 </style>
 <script data-cfasync="false">
 (function($){
@@ -267,6 +289,21 @@ ob_start();
   }
   function redraw(){drawSVG()}
   function setActive(group,button){group.querySelectorAll('button').forEach(function(b){b.classList.toggle('is_active',b===button)})}
+  // Synchroniseer de zichtbare selectie met de beginwaarden bij het openen.
+  root.querySelectorAll('.chac_swatches,.chac_color_chips').forEach(function(group){
+    var inputId=group.getAttribute('data-input')||group.getAttribute('data-color-target');
+    var input=q(inputId);
+    if(!input)return;
+    group.querySelectorAll('button[data-color]').forEach(function(button){
+      var active=button.getAttribute('data-color').toLowerCase()===String(input.value).toLowerCase();
+      button.classList.toggle('is_active',active);
+      if(active)button.setAttribute('aria-pressed','true');else button.setAttribute('aria-pressed','false');
+    });
+  });
+  root.querySelectorAll('input[type=color]').forEach(function(input){
+    var dot=input.closest('.chac_color_control').querySelector('.chac_color_dot');
+    if(dot)dot.style.background=input.value;
+  });
   root.querySelectorAll('.chac_tabs button').forEach(function(button){
     button.addEventListener('click',function(){
       var tab=button.getAttribute('data-tab');root.querySelectorAll('.chac_tabs button').forEach(function(b){b.classList.toggle('is_active',b===button)});
@@ -275,7 +312,7 @@ ob_start();
       var next=root.querySelector('#chacNext');next.innerHTML=(idx===4?'Terug naar uiterlijk':'Volgende stap')+' <i class="fa fa-arrow-right"></i>';
     });
   });
-  root.querySelectorAll('.chac_swatches').forEach(function(group){group.addEventListener('click',function(e){var b=e.target.closest('button[data-color]');if(!b)return;q(group.getAttribute('data-input')).value=b.getAttribute('data-color');setActive(group,b);redraw()})});
+  root.querySelectorAll('.chac_swatches').forEach(function(group){group.addEventListener('click',function(e){var b=e.target.closest('button[data-color]');if(!b)return;q(group.getAttribute('data-input')).value=b.getAttribute('data-color');setActive(group,b);group.querySelectorAll('button[data-color]').forEach(function(item){item.setAttribute('aria-pressed',item===b?'true':'false')});redraw()})});
   root.querySelectorAll('.chac_color_chips').forEach(function(group){group.addEventListener('click',function(e){var b=e.target.closest('button[data-color]');if(!b)return;q(group.getAttribute('data-color-target')).value=b.getAttribute('data-color');setActive(group,b);redraw()})});
   root.querySelectorAll('input[type=color]').forEach(function(input){input.addEventListener('input',function(){var dot=input.closest('.chac_color_control').querySelector('.chac_color_dot');if(dot)dot.style.background=input.value;redraw()})});
   root.querySelectorAll('.chac_options,.chac_choice_grid').forEach(function(group){group.addEventListener('click',function(e){var b=e.target.closest('button[data-value]');if(!b)return;var target=q(group.getAttribute('data-target'));if(target)target.value=b.getAttribute('data-value');setActive(group,b);redraw()})});

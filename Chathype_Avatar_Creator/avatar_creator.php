@@ -95,7 +95,7 @@ if (empty($data['user_id'])) {
  root.querySelector('#chacRandom').addEventListener('click',()=>{root.querySelectorAll('input[type=color]').forEach(el=>el.value='#'+Math.floor(Math.random()*16777215).toString(16).padStart(6,'0'));['HairStyle','Face','Accessory'].forEach(id=>{const el=root.querySelector('#chac'+id);el.selectedIndex=Math.floor(Math.random()*el.options.length)});draw()});
  root.querySelector('#chacSave').addEventListener('click',async()=>{
   const status=root.querySelector('#chacStatus');status.textContent='Avatar opslaan…';
-  try{const png=canvas.toDataURL('image/png');const res=await fetch('addons/chathype_avatar_creator/system/save_avatar.php',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({image:png})});const data=await res.json();if(!res.ok||!data.success)throw new Error(data.error||'Opslaan mislukt');status.textContent='Avatar opgeslagen! Vernieuw de chat als je profielfoto niet direct verandert.';}
+  try{const png=canvas.toDataURL('image/png');const res=await fetch('addons/Chathype_Avatar_Creator/system/save_avatar.php',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({image:png})});const data=await res.json();if(!res.ok||!data.success)throw new Error(data.error||'Opslaan mislukt');status.textContent='Avatar opgeslagen! Vernieuw de chat als je profielfoto niet direct verandert.';}
   catch(e){status.textContent='Opslaan mislukt: '+e.message;}
  });
  draw();

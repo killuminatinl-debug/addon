@@ -57,7 +57,7 @@ $chacAdminUrl = $chacBase . "addons/chathype_avatar_chooser/admin.php";
         <?php if ($message !== '') { ?>
             <div class="sub_text" style="padding:10px 0"><?php echo htmlspecialchars($message, ENT_QUOTES, 'UTF-8'); ?></div>
         <?php } ?>
-        <form method="post" action="<?php echo htmlspecialchars($chacAdminUrl, ENT_QUOTES, &quot;UTF-8&quot;); ?>">
+        <form method="post" action="<?php echo htmlspecialchars($chacAdminUrl, ENT_QUOTES, 'UTF-8'); ?>">
             <label style="display:block;margin:12px 0">
                 <input type="radio" name="chathype_avatar_enabled" value="1" <?php echo $current ? 'checked' : ''; ?>>
                 Ingeschakeld

@@ -112,7 +112,7 @@ ob_start();
   </div>
 </div>
 <style>
-.ch_avatar_modal.chac_studio{--chac-ink:#202132;--chac-muted:#85869a;--chac-line:#e9eaf2;--chac-purple:#6558e8;--chac-soft:#f5f4ff;display:block!important;width:100%!important;max-width:1160px;margin:0 auto;padding:0!important;max-height:92vh;overflow:auto;background:#f9faff!important;color:var(--chac-ink)!important;border:1px solid #e8e9f1;border-radius:23px;box-shadow:0 25px 90px rgba(24,24,50,.28);font-family:inherit;line-height:1.45}
+.ch_avatar_modal.chac_studio{--chac-ink:#202132;--chac-muted:#85869a;--chac-line:#e9eaf2;--chac-purple:#6558e8;--chac-soft:#f5f4ff;display:block!important;width:100%!important;max-width:1200px;margin:0 auto;padding:0!important;max-height:92vh;overflow:auto;background:#f9faff!important;color:var(--chac-ink)!important;border:0!important;border-radius:16px;box-shadow:none!important;font-family:inherit;line-height:1.45}
 .ch_avatar_modal.chac_studio *{box-sizing:border-box}
 .ch_avatar_modal.chac_studio button,.ch_avatar_modal.chac_studio input{font:inherit}
 .chac_topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:18px 23px;background:#fff;border-bottom:1px solid var(--chac-line)}
@@ -186,8 +186,11 @@ ob_start();
   /*
    * Behoud de originele CodyChat-modal. Pas alleen de breedte aan.
    */
-  root.style.setProperty('width','min(1200px, calc(100vw - 40px))','important');
+  root.style.setProperty('width','100%','important');
   root.style.setProperty('max-width','min(1200px, calc(100vw - 40px))','important');
+  root.style.setProperty('margin','0 auto','important');
+  root.style.setProperty('box-shadow','none','important');
+  root.style.setProperty('border','0','important');
   document.addEventListener('keydown',function(event){
     if(event.key==='Escape' && document.body.contains(root) && typeof hideOver==='function'){
       hideOver();

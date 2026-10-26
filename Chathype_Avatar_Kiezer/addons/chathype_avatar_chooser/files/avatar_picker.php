@@ -265,15 +265,53 @@ ob_start();
   var root=document.querySelector('.chac_studio');
   if(!root||root.getAttribute('data-chac-ready')==='1')return;
   root.setAttribute('data-chac-ready','1');
+  /*
+   * CodyChat loads addon content inside its normal compact overlay. Detach the
+   * studio from that wrapper so the old small dialog cannot remain behind it.
+   * Remember the wrappers so closing the studio can close the native overlay too.
+   */
+  var legacyWrappers=[];
+  var ancestor=root.parentElement;
+  while(ancestor && ancestor!==document.body && ancestor!==document.documentElement){
+    var cls=typeof ancestor.className==='string'?ancestor.className:'';
+    var id=ancestor.id||'';
+    if(/over|modal|popup|box|content/i.test(cls+' '+id)){
+      legacyWrappers.push({node:ancestor,display:ancestor.style.display});
+    }
+    ancestor=ancestor.parentElement;
+  }
+  document.body.appendChild(root);
+  legacyWrappers.forEach(function(item){
+    if(item.node!==root && item.node!==document.body){
+      item.node.style.display='none';
+      item.node.setAttribute('data-chac-legacy-hidden','1');
+    }
+  });
+  function closeAvatarStudio(){
+    root.remove();
+    legacyWrappers.forEach(function(item){
+      if(item.node && item.node.getAttribute('data-chac-legacy-hidden')==='1'){
+        item.node.style.display=item.display;
+        item.node.removeAttribute('data-chac-legacy-hidden');
+      }
+    });
+    if(typeof hideOver==='function'){
+      try{hideOver();}catch(e){}
+    }
+  }
   var closeButton=root.querySelector('#chacClose');
   if(closeButton){
-    closeButton.addEventListener('click',function(){
-      if(typeof hideOver==='function'){hideOver();return;}
-      var parent=root.parentElement;
-      root.remove();
-      if(parent&&parent.children.length===0){parent.style.display='none';}
+    closeButton.addEventListener('click',function(event){
+      event.preventDefault();
+      event.stopPropagation();
+      closeAvatarStudio();
     });
   }
+  document.addEventListener('keydown',function(event){
+    if(event.key==='Escape' && document.body.contains(root)){
+      closeAvatarStudio();
+    }
+  });
   var canvas=root.querySelector('#chacCanvas'),ctx=canvas.getContext('2d'),svgHost=root.querySelector('#chacAvatarSvg');
   function q(id){return root.querySelector('#chac'+id)}
   function val(id){return q(id).value}

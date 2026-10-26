@@ -8,7 +8,6 @@ start();
 ob_start();
 ?>
 <div class="ch_avatar_modal">
-    <button type="button" class="modal_close chac_close" id="chacClose" aria-label="Sluiten" title="Sluiten" onclick="if(typeof hideOver==='function'){hideOver();}else if(typeof hideModal==='function'){hideModal();}else{var e=this.closest('.modal_content');if(e)e.style.display='none';}"><span class="bcell_mid"><i class="fa fa-times"></i></span></button>
     <div class="chac_head">
         <div class="chac_icon"><i class="fa fa-user-circle"></i></div>
         <div><div class="chac_title">Maak je eigen avatar</div><div class="chac_sub">Stel zelf je gezicht, kleuren en stijl samen.</div></div>
@@ -35,7 +34,7 @@ ob_start();
     </div>
 </div>
 <style>
-.ch_avatar_modal{padding:18px!important;max-height:85vh;overflow:auto}.chac_close{border:0;cursor:pointer;background:transparent;color:inherit;font:inherit;z-index:20}.chac_head{display:flex;align-items:center;gap:12px;margin:4px 0 18px;padding-right:32px}.chac_icon{width:44px;height:44px;flex:0 0 44px;border-radius:14px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:22px;background:linear-gradient(135deg,#6366f1,#ec4899 60%,#06b6d4);box-shadow:0 5px 20px #6366f144}.chac_title{font-size:19px;font-weight:800}.chac_sub{font-size:12px;opacity:.72;margin-top:3px}.chac_layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px}.chac_preview{display:flex;align-items:center;justify-content:center;overflow:hidden;border-radius:16px;background:#e0e7ff;max-width:100%}.chac_preview canvas{display:block;width:100%;max-width:360px;height:auto}.chac_controls{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;align-content:start}.chac_group{min-width:0;padding:9px;border:1px solid rgba(127,127,127,.2);border-radius:10px;background:rgba(127,127,127,.06)}.chac_group label{display:block;font-size:12px;font-weight:700;margin-bottom:6px}.chac_group input[type=color]{width:100%;height:36px;min-height:36px;padding:2px;border-radius:6px}.chac_options{display:flex;flex-wrap:wrap;gap:5px}.chac_options button{border:1px solid rgba(127,127,127,.28);border-radius:7px;padding:6px 8px;background:rgba(127,127,127,.08);color:inherit;font-size:11px;cursor:pointer}.chac_options button.is_active{background:#6366f1;color:#fff;border-color:#6366f1;box-shadow:0 2px 8px #6366f144}.chac_actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.chac_btn{border:0;border-radius:9px;padding:10px 12px;cursor:pointer;font-weight:700;background:#6366f1;color:#fff}.chac_btn:hover{filter:brightness(1.06)}.chac_btn:disabled{opacity:.6;cursor:wait}.chac_secondary{background:#64748b}.chac_status{min-height:18px;margin-top:9px;font-size:12px;overflow-wrap:anywhere}.chac_status.error{color:#dc2626}.chac_status.ok{color:#16a34a}@media(max-width:560px){.chac_layout{grid-template-columns:1fr}.chac_preview{max-width:340px;margin:auto;width:100%}.chac_controls{grid-template-columns:repeat(2,minmax(0,1fr))}.chac_btn{flex:1}}
+.ch_avatar_modal{padding:22px!important;max-height:88vh;overflow:auto;background:linear-gradient(145deg,rgba(17,24,39,.98),rgba(30,41,59,.98));color:#f8fafc;border-radius:22px;border:1px solid rgba(255,255,255,.12);box-shadow:0 28px 90px rgba(0,0,0,.4)}.chac_head{display:flex;align-items:center;gap:12px;margin:4px 0 20px;padding-right:8px}.chac_icon{width:44px;height:44px;flex:0 0 44px;border-radius:14px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:22px;background:linear-gradient(135deg,#6366f1,#ec4899 60%,#06b6d4);box-shadow:0 5px 20px #6366f144}.chac_title{font-size:21px;font-weight:850;letter-spacing:-.4px}.chac_sub{font-size:12px;color:#a5b4fc;margin-top:4px}.chac_layout{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:18px}.chac_preview{display:flex;align-items:center;justify-content:center;overflow:hidden;border-radius:20px;background:radial-gradient(circle at 50% 30%,#e0e7ff,#a5b4fc 70%,#818cf8);max-width:100%;border:1px solid rgba(255,255,255,.2);box-shadow:inset 0 0 40px rgba(255,255,255,.25)}.chac_preview canvas{display:block;width:100%;max-width:360px;height:auto}.chac_controls{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;align-content:start}.chac_group{min-width:0;padding:11px;border:1px solid rgba(148,163,184,.19);border-radius:13px;background:rgba(255,255,255,.045);box-shadow:0 4px 16px rgba(0,0,0,.08)}.chac_group label{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.7px;color:#cbd5e1;font-weight:800;margin-bottom:8px}.chac_group input[type=color]{width:100%;height:36px;min-height:36px;padding:2px;border-radius:6px}.chac_options{display:flex;flex-wrap:wrap;gap:5px}.chac_options button{border:1px solid rgba(148,163,184,.25);border-radius:8px;padding:7px 9px;background:rgba(15,23,42,.65);color:#e2e8f0;font-size:11px;cursor:pointer;transition:background .15s,border-color .15s,transform .15s}.chac_options button.is_active{background:#6366f1;color:#fff;border-color:#6366f1;box-shadow:0 2px 8px #6366f144}.chac_actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.chac_btn{border:0;border-radius:11px;padding:12px 14px;cursor:pointer;font-weight:800;background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;box-shadow:0 8px 20px rgba(99,102,241,.25);transition:transform .15s,filter .15s}.chac_btn:hover{filter:brightness(1.06)}.chac_btn:disabled{opacity:.6;cursor:wait}.chac_secondary{background:rgba(148,163,184,.16);box-shadow:none;border:1px solid rgba(203,213,225,.2)}.chac_status{min-height:18px;margin-top:10px;font-size:12px;color:#cbd5e1;overflow-wrap:anywhere}.chac_status.error{color:#fca5a5}.chac_status.ok{color:#86efac}@media(max-width:560px){.ch_avatar_modal{padding:15px!important;border-radius:16px}.chac_layout{grid-template-columns:1fr}.chac_preview{max-width:340px;margin:auto;width:100%}.chac_controls{grid-template-columns:repeat(2,minmax(0,1fr))}.chac_btn{flex:1}}
 </style>
 <script data-cfasync="false">
 (function($){
@@ -63,8 +62,6 @@ ob_start();
             else if (modal) modal.style.display='none';
         }, 80);
     }
-    var closeButton = root.querySelector('#chacClose');
-    if (closeButton) closeButton.addEventListener('click', function(e){ e.preventDefault(); e.stopPropagation(); closeCreator(); });
     var canvas = root.querySelector('#chacCanvas');
     var ctx = canvas.getContext('2d');
     var val = function(id){ return root.querySelector('#chac'+id).value; };
@@ -129,10 +126,10 @@ ob_start();
                 if(typeof callSuccess==='function' && typeof system!=='undefined') callSuccess(system.saved || 'Opgeslagen');
                 setTimeout(function(){if(typeof hideOver==='function')hideOver();window.location.reload();},500);
             } else {
-                status.className='chac_status error';status.textContent='Opslaan mislukt. Controleer of de map avatar schrijfbaar is.';
+                status.className='chac_status error';status.textContent=String(response).trim().indexOf('AVATAR_ERROR:')===0 ? 'Opslaan mislukt: '+String(response).trim().replace('AVATAR_ERROR:','').replace(/_/g,' ').toLowerCase()+'.' : 'Opslaan mislukt. Serverantwoord: '+String(response).trim().slice(0,160);
             }
         }).fail(function(xhr){
-            status.className='chac_status error';status.textContent='Opslaan mislukt (HTTP '+xhr.status+').';
+            status.className='chac_status error';var detail=String(xhr.responseText||'').trim();status.textContent='Opslaan mislukt (HTTP '+xhr.status+'). '+(detail ? detail.slice(0,160) : 'Controleer PHP-errorlog en schrijfpermissies van de avatar-map.');
         }).always(function(){button.disabled=false;});
     });
     draw();

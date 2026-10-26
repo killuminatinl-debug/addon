@@ -36,22 +36,38 @@ ob_start();
         <button type="button" data-tab="style"><i class="fa fa-shirt"></i><span>Stijl</span></button>
         <button type="button" data-tab="details"><i class="fa fa-star"></i><span>Details</span></button>
       </div>
-      <section class="chac_panel is_active" data-panel="look">
+      <section class="chac_panel is_active chac_appearance_panel" data-panel="look" aria-label="Uiterlijk aanpassen">
+        <div class="chac_appearance_intro">
+          <span class="chac_appearance_icon" aria-hidden="true">✦</span>
+          <div><h3>Jouw uitstraling</h3><p>Pas je huidskleur en kleuren aan. Je ziet elke wijziging direct links.</p></div>
+        </div>
         <input type="hidden" id="chacSkin" value="#d99a70">
-        <div class="chac_section_title"><div><h3>Huidskleur</h3><p>Kies de tint die bij je past.</p></div><span class="chac_section_icon">◉</span></div>
-        <div class="chac_swatches" data-input="Skin" role="group" aria-label="Kies je huidskleur">
-          <button type="button" data-color="#ffe0c8" style="--sw:#ffe0c8" aria-label="Licht" title="Licht"></button>
-          <button type="button" data-color="#f3c5a0" style="--sw:#f3c5a0" aria-label="Perzik" title="Perzik"></button>
-          <button type="button" data-color="#d99a70" style="--sw:#d99a70" aria-label="Warm" title="Warm"></button>
-          <button type="button" data-color="#b97850" style="--sw:#b97850" aria-label="Karamel" title="Karamel"></button>
-          <button type="button" data-color="#8e563c" style="--sw:#8e563c" aria-label="Bruin" title="Bruin"></button>
-          <button type="button" data-color="#623b2b" style="--sw:#623b2b" aria-label="Donker" title="Donker"></button>
+        <div class="chac_appearance_block">
+          <div class="chac_appearance_heading"><div><h3>Huidskleur</h3><p>Kies een tint die bij jou past.</p></div><span class="chac_appearance_count">6 tinten</span></div>
+          <div class="chac_swatches chac_skin_swatches" data-input="Skin" role="group" aria-label="Kies je huidskleur">
+            <button type="button" data-color="#ffe0c8" style="--sw:#ffe0c8" aria-label="Lichte huidskleur" title="Licht" aria-pressed="false"><span></span></button>
+            <button type="button" data-color="#f3c5a0" style="--sw:#f3c5a0" aria-label="Perzikkleurige huidskleur" title="Perzik" aria-pressed="false"><span></span></button>
+            <button type="button" data-color="#d99a70" style="--sw:#d99a70" aria-label="Warme huidskleur" title="Warm" aria-pressed="true"><span></span></button>
+            <button type="button" data-color="#b97850" style="--sw:#b97850" aria-label="Karamelkleurige huidskleur" title="Karamel" aria-pressed="false"><span></span></button>
+            <button type="button" data-color="#8e563c" style="--sw:#8e563c" aria-label="Bruine huidskleur" title="Bruin" aria-pressed="false"><span></span></button>
+            <button type="button" data-color="#623b2b" style="--sw:#623b2b" aria-label="Donkere huidskleur" title="Donker" aria-pressed="false"><span></span></button>
+          </div>
         </div>
-        <div class="chac_divider"></div>
-        <div class="chac_color_grid chac_appearance_colors">
-          <label class="chac_color_control"><span><i class="chac_color_dot" style="background:#3b2419"></i><span><strong>Haarkleur</strong><small>Kies je basiskleur</small></span></span><input id="chacHair" type="color" value="#3b2419" aria-label="Haarkleur kiezen"></label>
-          <label class="chac_color_control"><span><i class="chac_color_dot" style="background:#3867a8"></i><span><strong>Oogkleur</strong><small>Maak je look af</small></span></span><input id="chacEyes" type="color" value="#3867a8" aria-label="Oogkleur kiezen"></label>
+        <div class="chac_appearance_separator"></div>
+        <div class="chac_appearance_block">
+          <div class="chac_appearance_heading"><div><h3>Gezichtsdetails</h3><p>Kies je haar- en oogkleur.</p></div><span class="chac_appearance_count">2 kleuren</span></div>
+          <div class="chac_color_grid chac_appearance_colors">
+            <label class="chac_color_control chac_appearance_color_control" for="chacHair">
+              <span class="chac_appearance_color_label"><i class="chac_color_dot" style="background:#3b2419"></i><span><strong>Haarkleur</strong><small>De kleur van je kapsel</small></span></span>
+              <input id="chacHair" type="color" value="#3b2419" aria-label="Haarkleur kiezen">
+            </label>
+            <label class="chac_color_control chac_appearance_color_control" for="chacEyes">
+              <span class="chac_appearance_color_label"><i class="chac_color_dot" style="background:#3867a8"></i><span><strong>Oogkleur</strong><small>Maak je ogen uniek</small></span></span>
+              <input id="chacEyes" type="color" value="#3867a8" aria-label="Oogkleur kiezen">
+            </label>
+          </div>
         </div>
+        <div class="chac_appearance_tip"><i class="fa fa-wand-magic-sparkles" aria-hidden="true"></i><span><strong>Live voorbeeld</strong><small>Je hoeft niets te bevestigen om kleuren uit te proberen.</small></span></div>
       </section>
       <section class="chac_panel" data-panel="hair">
         <div class="chac_section_title"><div><h3>Vind je kapsel</h3><p>Een goede look begint bovenaan.</p></div><span class="chac_section_icon">✂</span></div>
@@ -180,26 +196,39 @@ ob_start();
 .chac_topbar{position:relative;padding-right:62px!important}.chac_close{position:absolute!important;top:12px!important;right:12px!important;z-index:999999!important;display:flex!important;align-items:center!important;justify-content:center!important;width:38px!important;height:38px!important;min-width:38px!important;min-height:38px!important;margin:0!important;padding:0!important;border:1px solid #d9dbea!important;border-radius:10px!important;background:#fff!important;color:#303047!important;font-family:Arial,sans-serif!important;font-size:29px!important;font-weight:400!important;line-height:1!important;opacity:1!important;visibility:visible!important;cursor:pointer!important;box-shadow:0 2px 8px rgba(20,20,50,.12)!important}.chac_close span{display:block!important;line-height:1!important;transform:translateY(-1px);pointer-events:none!important}.chac_topbar_actions{padding-right:38px!important}
 .chac_topbar_actions{display:flex!important;align-items:center!important;justify-content:flex-end!important;gap:10px!important;flex:0 0 auto!important;position:relative!important;z-index:1000000!important}.chac_close{position:static!important;inset:auto!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;gap:6px!important;width:auto!important;min-width:38px!important;height:38px!important;min-height:38px!important;flex:0 0 auto!important;margin:0!important;padding:0 10px!important;border:1px solid #d9dbea!important;border-radius:10px!important;background:#fff!important;color:#303047!important;font-family:Arial,sans-serif!important;font-size:13px!important;font-weight:700!important;line-height:1!important;opacity:1!important;visibility:visible!important;cursor:pointer!important;box-shadow:0 2px 8px rgba(20,20,50,.12)!important}.chac_close_icon{display:block!important;font-size:25px!important;font-weight:400!important;line-height:1!important;pointer-events:none!important}.chac_close_text{display:inline!important;font-size:12px!important;white-space:nowrap!important;pointer-events:none!important}@media(max-width:420px){.chac_topbar_actions{gap:6px!important}.chac_live{font-size:7px!important;padding:5px!important}.chac_close{padding:0 8px!important}}
 
-/* Gerichte verbeteringen voor het paneel Uiterlijk */
-.chac_panel[data-panel="look"]{padding:2px 0 8px}
-.chac_panel[data-panel="look"] .chac_section_title{margin-bottom:16px}
-.chac_panel[data-panel="look"] .chac_swatches{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px;align-items:center;padding:8px 4px 12px}
-.chac_panel[data-panel="look"] .chac_swatches button{width:100%;height:auto;aspect-ratio:1;min-width:0;min-height:34px;max-width:42px;justify-self:center;border-width:3px}
-.chac_panel[data-panel="look"] .chac_swatches button.is_active{box-shadow:0 0 0 3px #6558e8,0 4px 10px rgba(101,88,232,.18);transform:scale(1.06)}
-.chac_appearance_colors{gap:12px}
-.chac_appearance_colors .chac_color_control{min-height:72px;padding:12px 13px;background:linear-gradient(145deg,#fff,#fafaff);border-color:#e5e6f2;box-shadow:0 3px 12px rgba(35,35,75,.035)}
-.chac_appearance_colors .chac_color_control>span{gap:10px;font-size:11px}
-.chac_appearance_colors .chac_color_control>span>span{display:flex;flex-direction:column;gap:3px}
-.chac_appearance_colors .chac_color_control strong{font-size:11px;color:#414158}
-.chac_appearance_colors .chac_color_control small{font-size:9px;font-weight:500;color:#9293a5}
-.chac_appearance_colors .chac_color_dot{width:16px;height:16px;flex-basis:16px}
-.chac_appearance_colors .chac_color_control input[type=color]{width:34px;height:34px;flex-basis:34px}
-@media(max-width:650px){
- .chac_panel[data-panel="look"] .chac_swatches{gap:10px;padding-left:2px;padding-right:2px}
- .chac_appearance_colors{grid-template-columns:minmax(0,1fr)}
- .chac_appearance_colors .chac_color_control{min-height:60px}
-}
-@media(max-width:360px){.chac_panel[data-panel="look"] .chac_swatches{grid-template-columns:repeat(3,minmax(0,1fr))}}
+
+/* Uiterlijk-paneel: opnieuw opgebouwd, met eigen classes en zonder globale stijloverrides */
+.chac_appearance_panel{padding:0 0 8px!important;color:#292940}
+.chac_appearance_intro{display:flex;align-items:center;gap:12px;margin:0 0 22px;padding:15px 16px;border:1px solid #e8e5ff;border-radius:15px;background:linear-gradient(120deg,#f6f4ff 0%,#fff 100%)}
+.chac_appearance_icon{display:flex;align-items:center;justify-content:center;width:42px;height:42px;flex:0 0 42px;border-radius:13px;background:#e9e5ff;color:#6558e8;font-size:20px}
+.chac_appearance_intro h3,.chac_appearance_heading h3{margin:0;color:#303047;font-size:13px;font-weight:900;letter-spacing:-.15px}
+.chac_appearance_intro p,.chac_appearance_heading p{margin:5px 0 0;color:#85869a;font-size:10px;line-height:1.5}
+.chac_appearance_block{min-width:0}
+.chac_appearance_heading{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 0 14px}
+.chac_appearance_count{flex:0 0 auto;padding:6px 9px;border:1px solid #e9e7fb;border-radius:8px;background:#f8f7ff;color:#7469d8;font-size:9px;font-weight:850}
+.chac_appearance_panel .chac_skin_swatches{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px;padding:5px 3px 8px}
+.chac_appearance_panel .chac_skin_swatches button{position:relative;display:flex;align-items:center;justify-content:center;width:100%;max-width:48px;min-width:0;min-height:0;aspect-ratio:1;margin:0 auto;padding:4px;border:1px solid #e2e3ed;border-radius:50%;background:#fff;box-shadow:none;cursor:pointer;transition:box-shadow .16s,transform .16s,border-color .16s}
+.chac_appearance_panel .chac_skin_swatches button>span{display:block;width:100%;height:100%;border-radius:50%;background:var(--sw);box-shadow:inset 0 0 0 1px rgba(25,25,45,.06)}
+.chac_appearance_panel .chac_skin_swatches button:hover{transform:translateY(-2px);border-color:#a9a2f3}
+.chac_appearance_panel .chac_skin_swatches button.is_active{border:2px solid #6558e8;box-shadow:0 0 0 3px #eeecff,0 4px 12px rgba(101,88,232,.18);transform:scale(1.04)}
+.chac_appearance_panel .chac_skin_swatches button.is_active:after{content:"✓";position:absolute;right:-3px;bottom:-3px;display:flex;align-items:center;justify-content:center;width:17px;height:17px;border:2px solid #fff;border-radius:50%;background:#6558e8;color:#fff;font-family:Arial,sans-serif;font-size:10px;font-weight:900;line-height:1}
+.chac_appearance_separator{height:1px;margin:22px 0;background:linear-gradient(90deg,#e9e7f5,rgba(233,231,245,.25))}
+.chac_appearance_colors{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.chac_appearance_color_control{display:flex;align-items:center;justify-content:space-between;gap:9px;min-width:0;min-height:76px;padding:12px;border:1px solid #e7e8f1;border-radius:14px;background:#fff;box-shadow:0 4px 14px rgba(35,35,75,.035);cursor:pointer}
+.chac_appearance_color_label{display:flex;align-items:center;gap:10px;min-width:0}
+.chac_appearance_color_label .chac_color_dot{width:17px;height:17px;flex:0 0 17px;border:2px solid #fff;box-shadow:0 0 0 1px rgba(30,30,55,.15)}
+.chac_appearance_color_label>span{display:flex;flex-direction:column;gap:4px;min-width:0}
+.chac_appearance_color_label strong{color:#414158;font-size:11px;font-weight:850}
+.chac_appearance_color_label small{color:#9293a5;font-size:9px;font-weight:500;line-height:1.35}
+.chac_appearance_color_control input[type=color]{display:block;width:35px;height:35px;flex:0 0 35px;margin:0;padding:3px;border:1px solid #e1e2ec;border-radius:10px;background:#fff;cursor:pointer}
+.chac_appearance_tip{display:flex;align-items:center;gap:11px;margin-top:22px;padding:13px 14px;border:1px solid #e4f5ec;border-radius:12px;background:#f5fcf8;color:#218457}
+.chac_appearance_tip>i{display:flex;align-items:center;justify-content:center;width:30px;height:30px;flex:0 0 30px;border-radius:9px;background:#e1f7eb;font-size:13px}
+.chac_appearance_tip>span{display:flex;flex-direction:column;gap:3px}
+.chac_appearance_tip strong{font-size:10px;font-weight:900}
+.chac_appearance_tip small{color:#688b7b;font-size:9px;line-height:1.45}
+.chac_appearance_panel button:focus-visible,.chac_appearance_panel input:focus-visible{outline:3px solid #9188ff;outline-offset:3px}
+@media(max-width:650px){.chac_appearance_intro{margin-bottom:17px;padding:12px}.chac_appearance_panel .chac_skin_swatches{gap:9px}.chac_appearance_colors{grid-template-columns:minmax(0,1fr);gap:9px}.chac_appearance_color_control{min-height:65px}.chac_appearance_separator{margin:18px 0}}
+@media(max-width:360px){.chac_appearance_panel .chac_skin_swatches{grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.chac_appearance_panel .chac_skin_swatches button{max-width:44px}}
 
 </style>
 <script data-cfasync="false">
@@ -288,7 +317,18 @@ ob_start();
     img.src=url;
   }
   function redraw(){drawSVG()}
-  function setActive(group,button){group.querySelectorAll('button').forEach(function(b){b.classList.toggle('is_active',b===button)})}
+  function setActive(group,button){group.querySelectorAll('button').forEach(function(b){b.classList.toggle('is_active',b===button);b.setAttribute('aria-pressed',b===button?'true':'false')})}
+  // Initialize appearance choices to match the actual avatar values.
+  root.querySelectorAll('.chac_swatches,.chac_color_chips').forEach(function(group){
+    var inputId=group.getAttribute('data-input')||group.getAttribute('data-color-target');
+    var input=q(inputId);
+    if(!input)return;
+    group.querySelectorAll('button[data-color]').forEach(function(button){
+      var active=button.getAttribute('data-color').toLowerCase()===String(input.value).toLowerCase();
+      button.classList.toggle('is_active',active);
+      button.setAttribute('aria-pressed',active?'true':'false');
+    });
+  });
   // Synchroniseer de zichtbare selectie met de beginwaarden bij het openen.
   root.querySelectorAll('.chac_swatches,.chac_color_chips').forEach(function(group){
     var inputId=group.getAttribute('data-input')||group.getAttribute('data-color-target');

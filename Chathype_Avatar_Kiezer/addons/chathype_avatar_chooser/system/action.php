@@ -104,7 +104,7 @@ if (!is_writable($avatarDir)) {
 }
 
 $uid = (int)$data['user_id'];
-$filename = 'chathype_custom_' . $uid . '.png';
+$filename = 'chathype_custom_' . $uid . '_' . date('YmdHis') . '_' . bin2hex(random_bytes(3)) . '.png';
 $target = $avatarDir . DIRECTORY_SEPARATOR . $filename;
 $tmp = $target . '.' . uniqid('tmp', true);
 
@@ -129,7 +129,8 @@ $ok = $stmt->execute();
 $changed = $stmt->affected_rows;
 $stmt->close();
 
-if (!$ok) {
+if (!$ok || $changed < 0) {
+    @unlink($target);
     http_response_code(500);
     exit('AVATAR_ERROR:USER_AVATAR_UPDATE_FAILED');
 }

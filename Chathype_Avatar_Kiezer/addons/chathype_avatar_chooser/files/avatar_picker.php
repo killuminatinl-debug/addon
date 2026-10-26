@@ -176,60 +176,14 @@ ob_start();
 @media(max-width:390px){.chac_live{display:none}.chac_editor{padding:14px 11px}.chac_stage{padding:12px}.chac_choice_grid{grid-template-columns:repeat(2,minmax(0,1fr))}.chac_accessory_choices{grid-template-columns:repeat(3,minmax(0,1fr))}.chac_stage_buttons{grid-template-columns:1fr}.chac_color_grid{gap:6px}.chac_color_control{padding:8px}.chac_tabs button{gap:4px;font-size:10px}.chac_tabs button i{font-size:11px}}
 @media(prefers-reduced-motion:reduce){.ch_avatar_modal.chac_studio *{animation:none!important;transition:none!important}}
 
-/* Modal fix: cover the legacy picker and center the new studio in the viewport */
-.ch_avatar_modal.chac_studio{box-shadow:0 0 0 100vmax rgba(18,20,40,.62),0 25px 90px rgba(24,24,50,.38)!important}
-.ch_avatar_modal.chac_studio .chac_topbar{position:relative!important;padding-right:58px!important}
-.ch_avatar_modal.chac_studio .chac_close{position:absolute!important;top:12px!important;right:13px!important;z-index:5!important;display:flex!important;align-items:center!important;justify-content:center!important;width:34px!important;height:34px!important;min-width:34px!important;min-height:34px!important;margin:0!important;padding:0!important;border:1px solid #e4e5ef!important;border-radius:10px!important;background:#fff!important;color:#45465d!important;font-size:16px!important;line-height:1!important;cursor:pointer!important;box-shadow:0 2px 8px rgba(25,25,55,.08)!important}
-.ch_avatar_modal.chac_studio .chac_close:hover{background:#f2f0ff!important;color:#6558e8!important;border-color:#cfcafd!important}
-.ch_avatar_modal.chac_studio .chac_close i{pointer-events:none!important}
-
 .ch_avatar_modal.chac_studio{
- position:fixed!important;
- left:50%!important;
- top:50%!important;
- right:auto!important;
- bottom:auto!important;
- transform:translate(-50%,-50%)!important;
- z-index:999999!important;
- display:block!important;
- width:min(1180px,96vw)!important;
- max-width:1180px!important;
- max-height:92vh!important;
- margin:0!important;
- overflow:auto!important;
- background:#f9faff!important;
- opacity:1!important;
- visibility:visible!important;
- box-shadow:0 25px 90px rgba(24,24,50,.38)!important;
-}
-.ch_avatar_modal.chac_studio .chac_workspace{
- display:grid!important;
- grid-template-columns:minmax(280px,.85fr) minmax(0,1.15fr)!important;
- align-items:stretch!important;
- width:100%!important;
- gap:0!important;
-}
-.ch_avatar_modal.chac_studio .chac_stage{
- display:flex!important;flex-direction:column!important;position:relative!important;top:auto!important;
- align-self:stretch!important;width:auto!important;min-width:0!important;padding:22px!important;
- border-right:1px solid #e6e5f6!important;border-bottom:0!important;
-}
-.ch_avatar_modal.chac_studio .chac_avatar_stage{width:100%!important;max-width:420px!important;min-height:240px!important;margin:0 auto!important}
-.ch_avatar_modal.chac_studio .chac_avatar_svg{width:100%!important;max-width:390px!important;margin:0 auto!important}
-.ch_avatar_modal.chac_studio .chac_stage_buttons{display:grid!important;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr)!important;flex-direction:row!important;width:100%!important;max-width:none!important;margin:0 auto!important}
-.ch_avatar_modal.chac_studio .chac_stage_buttons .chac_btn{width:100%!important}
-.ch_avatar_modal.chac_studio .chac_editor{display:block!important;width:auto!important;min-width:0!important;padding:22px 24px 16px!important}
-.ch_avatar_modal.chac_studio .chac_editor_intro{display:flex!important;flex-direction:row!important;align-items:flex-start!important}
-.ch_avatar_modal.chac_studio .chac_tabs{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important}
-.ch_avatar_modal.chac_studio .chac_tabs button{justify-content:center!important;width:auto!important}
-.ch_avatar_modal.chac_studio .chac_color_grid{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important}
-.ch_avatar_modal.chac_studio .chac_choice_grid{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important}
-.ch_avatar_modal.chac_studio .chac_accessory_choices{grid-template-columns:repeat(3,minmax(0,1fr))!important}
-.ch_avatar_modal.chac_studio .chac_choice_grid button{display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;min-height:82px!important;padding:10px 4px!important;text-align:center!important}
-.ch_avatar_modal.chac_studio .chac_editor_footer{display:flex!important;flex-direction:row!important;align-items:center!important}
-.ch_avatar_modal.chac_studio .chac_next{width:auto!important}
-@media(max-width:900px){
- .ch_avatar_modal.chac_studio{width:96vw!important}
+  position:relative!important;
+  left:auto!important;top:auto!important;right:auto!important;bottom:auto!important;
+  transform:none!important;z-index:auto!important;display:block!important;
+  width:100%!important;max-width:none!important;max-height:none!important;
+  margin:0!important;overflow:visible!important;background:#f9faff!important;
+  opacity:1!important;visibility:visible!important;box-shadow:none!important;
+ }
  .ch_avatar_modal.chac_studio .chac_workspace{grid-template-columns:minmax(230px,.75fr) minmax(0,1.25fr)!important}
  .ch_avatar_modal.chac_studio .chac_stage{padding:15px!important}
  .ch_avatar_modal.chac_studio .chac_editor{padding:18px!important}
@@ -266,50 +220,50 @@ ob_start();
   if(!root||root.getAttribute('data-chac-ready')==='1')return;
   root.setAttribute('data-chac-ready','1');
   /*
-   * CodyChat loads addon content inside its normal compact overlay. Detach the
-   * studio from that wrapper so the old small dialog cannot remain behind it.
-   * Remember the wrappers so closing the studio can close the native overlay too.
+   * Keep CodyChat's original modal and native close controls.
+   * Widen the existing modal containers instead of creating a second window.
    */
-  var legacyWrappers=[];
-  var ancestor=root.parentElement;
-  while(ancestor && ancestor!==document.body && ancestor!==document.documentElement){
-    var cls=typeof ancestor.className==='string'?ancestor.className:'';
-    var id=ancestor.id||'';
-    if(/over|modal|popup|box|content/i.test(cls+' '+id)){
-      legacyWrappers.push({node:ancestor,display:ancestor.style.display});
+  var modalNodes=[];
+  var node=root;
+  while(node && node!==document.body && node!==document.documentElement){
+    var cls=typeof node.className==='string'?node.className:'';
+    var id=node.id||'';
+    if(node===root || /over|modal|popup|box|content/i.test(cls+' '+id)){
+      modalNodes.push(node);
     }
-    ancestor=ancestor.parentElement;
+    node=node.parentElement;
   }
-  document.body.appendChild(root);
-  legacyWrappers.forEach(function(item){
-    if(item.node!==root && item.node!==document.body){
-      item.node.style.display='none';
-      item.node.setAttribute('data-chac-legacy-hidden','1');
+  modalNodes.forEach(function(el){
+    if(el===root){
+      el.style.setProperty('position','relative','important');
+      el.style.setProperty('left','auto','important');
+      el.style.setProperty('top','auto','important');
+      el.style.setProperty('right','auto','important');
+      el.style.setProperty('bottom','auto','important');
+      el.style.setProperty('transform','none','important');
+      el.style.setProperty('width','100%','important');
+      el.style.setProperty('max-width','none','important');
+      el.style.setProperty('max-height','none','important');
+      el.style.setProperty('margin','0','important');
+      el.style.setProperty('box-shadow','none','important');
+    }else{
+      el.style.setProperty('width','min(1180px,96vw)','important');
+      el.style.setProperty('max-width','96vw','important');
+      el.style.setProperty('min-width','0','important');
+      el.style.setProperty('max-height','94vh','important');
+      el.style.setProperty('height','auto','important');
+      el.style.setProperty('margin-left','auto','important');
+      el.style.setProperty('margin-right','auto','important');
+      el.style.setProperty('overflow','auto','important');
+      el.style.setProperty('box-sizing','border-box','important');
     }
   });
-  function closeAvatarStudio(){
-    root.remove();
-    legacyWrappers.forEach(function(item){
-      if(item.node && item.node.getAttribute('data-chac-legacy-hidden')==='1'){
-        item.node.style.display=item.display;
-        item.node.removeAttribute('data-chac-legacy-hidden');
-      }
-    });
-    if(typeof hideOver==='function'){
-      try{hideOver();}catch(e){}
-    }
-  }
-  var closeButton=root.querySelector('#chacClose');
-  if(closeButton){
-    closeButton.addEventListener('click',function(event){
-      event.preventDefault();
-      event.stopPropagation();
-      closeAvatarStudio();
-    });
-  }
+  /* Keep the original close area from CodyChat; the extra studio X is removed. */
+  var extraClose=root.querySelector('#chacClose');
+  if(extraClose){extraClose.remove();}
   document.addEventListener('keydown',function(event){
-    if(event.key==='Escape' && document.body.contains(root)){
-      closeAvatarStudio();
+    if(event.key==='Escape' && document.body.contains(root) && typeof hideOver==='function'){
+      hideOver();
     }
   });
   var canvas=root.querySelector('#chacCanvas'),ctx=canvas.getContext('2d'),svgHost=root.querySelector('#chacAvatarSvg');

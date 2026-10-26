@@ -1,7 +1,20 @@
 <?php
 $load_addons = 'chathype_avatar_chooser';
 require_once __DIR__ . '/../../../system/config_addons.php';
-if (!canManageAddons()) { die(); }
+$chacAdminAllowed = false;
+if (function_exists('canManageAddons')) {
+    $chacAdminAllowed = (bool)canManageAddons();
+}
+if (!$chacAdminAllowed && function_exists('isAdmin')) {
+    $chacAdminAllowed = (bool)isAdmin(isset($data) && is_array($data) ? $data : array());
+}
+if (!$chacAdminAllowed && isset($data['user_rank']) && is_numeric($data['user_rank'])) {
+    $chacAdminAllowed = ((int)$data['user_rank'] >= 8);
+}
+if (!$chacAdminAllowed) {
+    http_response_code(403);
+    exit('Geen toegang tot de avatar-instellingen.');
+}
 $avatarEnabled = true;
 $avatarSettingQuery = $mysqli->query("SELECT custom1 FROM boom_addons WHERE addons = 'chathype_avatar_chooser' LIMIT 1");
 if ($avatarSettingQuery && ($avatarSettingRow = $avatarSettingQuery->fetch_assoc())) {

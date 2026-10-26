@@ -10,7 +10,7 @@ ob_start();
 <div class="ch_avatar_modal chac_studio" data-action-path="addons/chathype_avatar_chooser/system/action.php" data-chac-ready="0">
   <header class="chac_topbar">
     <div class="chac_brand"><span class="chac_brandmark"><i class="fa fa-magic"></i></span><span><strong>Chathype Avatar Studio</strong><small>Jouw look. Jouw stijl.</small></span></div>
-    <div class="chac_topbar_actions"><span class="chac_live"><i></i> LIVE VOORBEELD</span><button type="button" class="chac_close" id="chacClose" aria-label="Avatarvenster sluiten" title="Sluiten"><span aria-hidden="true">×</span></button></div>
+    <div class="chac_topbar_actions"><span class="chac_live"><i></i> LIVE VOORBEELD</span><button type="button" class="chac_close" id="chacClose" aria-label="Avatarvenster sluiten" title="Sluiten" onclick="if(typeof hideOver==='function'){hideOver()}else{var m=this.closest('.ch_avatar_modal');if(m)m.remove()}"><span aria-hidden="true">×</span></button></div>
   </header>
   <div class="chac_workspace">
     <aside class="chac_stage">
@@ -177,6 +177,7 @@ ob_start();
 @media(prefers-reduced-motion:reduce){.ch_avatar_modal.chac_studio *{animation:none!important;transition:none!important}}
 
 
+.chac_topbar{position:relative;padding-right:62px!important}.chac_close{position:absolute!important;top:12px!important;right:12px!important;z-index:999999!important;display:flex!important;align-items:center!important;justify-content:center!important;width:38px!important;height:38px!important;min-width:38px!important;min-height:38px!important;margin:0!important;padding:0!important;border:1px solid #d9dbea!important;border-radius:10px!important;background:#fff!important;color:#303047!important;font-family:Arial,sans-serif!important;font-size:29px!important;font-weight:400!important;line-height:1!important;opacity:1!important;visibility:visible!important;cursor:pointer!important;box-shadow:0 2px 8px rgba(20,20,50,.12)!important}.chac_close span{display:block!important;line-height:1!important;transform:translateY(-1px);pointer-events:none!important}.chac_topbar_actions{padding-right:38px!important}
 </style>
 <script data-cfasync="false">
 (function($){

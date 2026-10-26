@@ -4,18 +4,12 @@ require(__DIR__ . '/../../../system/config_addons.php');
 if (!canManageAddons()) { die(); }
 $avatarEnabled = !isset($addons['custom1']) || (string)$addons['custom1'] !== '0';
 ?>
-<?php echo elementTitle('Chathype Avatar Kiezer', 'loadL(\'admin/setting_addons.php\');'); ?>
-<div class="page_full"><div class="page_element"><div class="config_section">
-  <div class="setting_element"><p class="label">Avatar-kiezer voor leden</p><p class="sub_text">Wanneer ingeschakeld, zien leden op hun eigen profiel een knop waarmee ze één van de 40 avatars kunnen kiezen.</p>
-    <select id="chathype_avatar_enabled"><option value="1" <?php echo $avatarEnabled ? 'selected' : ''; ?>>Ingeschakeld</option><option value="0" <?php echo !$avatarEnabled ? 'selected' : ''; ?>>Uitgeschakeld</option></select>
-  </div>
-  <button id="save_chathype_avatar" onclick="saveChathypeAvatar();" type="button" class="tmargin10 reg_button theme_btn"><i class="fa fa-floppy-o"></i> <?php echo $lang['save']; ?></button>
+<?php echo elementTitle('Chathype Avatar Studio', 'loadL(\'admin/setting_addons.php\');'); ?>
+<div class="page_full"><div class="page_element"><div class="config_section chac_admin_card">
+ <div class="chac_admin_head"><div class="chac_admin_icon"><i class="fa fa-magic"></i></div><div><p class="label">Chathype Avatar Studio</p><p class="sub_text">Beheer de avatar-maker voor leden.</p></div></div>
+ <div class="setting_element"><p class="label">Avatar-maker voor leden</p><p class="sub_text">Leden kunnen hun eigen gezicht, kapsel, kleuren en accessoires samenstellen.</p>
+ <select id="chathype_avatar_enabled"><option value="1" <?php echo $avatarEnabled ? 'selected' : ''; ?>>Ingeschakeld</option><option value="0" <?php echo !$avatarEnabled ? 'selected' : ''; ?>>Uitgeschakeld</option></select></div>
+ <button id="save_chathype_avatar" type="button" class="tmargin10 reg_button theme_btn" onclick="(function(b){var s=document.getElementById('chacAdminStatus'),v=document.getElementById('chathype_avatar_enabled');if(!v||!window.jQuery){if(s)s.textContent='Instellingen konden niet worden geladen.';return;}b.disabled=true;if(s)s.textContent='Instellingen opslaan…';jQuery.ajax({url:'addons/chathype_avatar_chooser/system/action.php',type:'POST',data:{save_avatar_setting:1,chathype_avatar_enabled:v.value},cache:false,dataType:'text'}).done(function(r){if(String(r).trim()==='5'){if(s)s.textContent='Instellingen opgeslagen.';if(typeof callSuccess==='function'&&window.system)callSuccess(system.saved||'Opgeslagen');}else{if(s)s.textContent='Opslaan mislukt. Controleer de database en addonrechten.';if(typeof callError==='function'&&window.system)callError(system.error||'Fout');}}).fail(function(x){if(s)s.textContent='Opslaan mislukt (HTTP '+x.status+').';if(typeof callError==='function'&&window.system)callError(system.error||'Fout');}).always(function(){b.disabled=false;});})(this);"><i class="fa fa-floppy-o"></i> <?php echo $lang['save']; ?></button>
+ <p id="chacAdminStatus" class="sub_text" role="status" aria-live="polite"></p>
 </div></div></div>
-<script data-cfasync="false">
-function saveChathypeAvatar(){
-  $.post('addons/chathype_avatar_chooser/system/action.php',{save_avatar_setting:1,chathype_avatar_enabled:$('#chathype_avatar_enabled').val()},function(response){
-    if(String(response).trim()==='5'){ if(typeof callSuccess==='function') callSuccess(system.saved); if(typeof configAddons==='function') configAddons('chathype_avatar_chooser'); }
-    else { if(typeof callError==='function') callError(system.error); }
-  }).fail(function(){ if(typeof callError==='function') callError(system.error); });
-}
-</script>
+<style>.chac_admin_card{max-width:760px;padding:22px!important;border-radius:16px}.chac_admin_head{display:flex;align-items:center;gap:14px;margin-bottom:22px}.chac_admin_icon{width:52px;height:52px;display:flex;align-items:center;justify-content:center;border-radius:15px;color:#fff;font-size:23px;background:linear-gradient(135deg,#6366f1,#ec4899,#06b6d4);box-shadow:0 8px 24px #6366f133}.chac_admin_head .label{font-size:18px;font-weight:800;margin:0 0 5px}.chac_admin_head .sub_text{margin:0}.chac_admin_card select{min-width:200px;max-width:100%}#chacAdminStatus{min-height:18px;margin-top:12px}</style>

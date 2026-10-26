@@ -178,6 +178,44 @@ ob_start();
 
 /* Vertical layout for CodyChat's narrow modal */
 @media(min-width:0px){.ch_avatar_modal.chac_studio{max-width:760px!important;width:100%!important;min-width:0!important}.ch_avatar_modal.chac_studio .chac_workspace{display:flex!important;flex-direction:column!important;width:100%;min-width:0}.ch_avatar_modal.chac_studio .chac_stage{position:relative!important;top:auto!important;width:100%;padding:14px;border-right:0!important;border-bottom:1px solid #e6e5f6}.ch_avatar_modal.chac_studio .chac_avatar_stage{width:100%;max-width:300px;min-height:0;margin:0 auto}.ch_avatar_modal.chac_studio .chac_stage_buttons{display:flex!important;flex-direction:column!important;width:100%;max-width:420px;margin:0 auto}.ch_avatar_modal.chac_studio .chac_btn{width:100%}.ch_avatar_modal.chac_studio .chac_editor{width:100%;min-width:0;padding:18px}.ch_avatar_modal.chac_studio .chac_color_grid,.ch_avatar_modal.chac_studio .chac_choice_grid,.ch_avatar_modal.chac_studio .chac_accessory_choices{grid-template-columns:minmax(0,1fr)!important;width:100%}.ch_avatar_modal.chac_studio .chac_choice_grid button{flex-direction:row;justify-content:flex-start;min-height:52px;padding:9px 12px;text-align:left}.ch_avatar_modal.chac_studio .chac_editor_footer{flex-direction:column;align-items:stretch}.ch_avatar_modal.chac_studio .chac_next{width:100%}}
+
+/* FINAL OVERRIDE: CodyChat modal is narrow; force every major section into one vertical stack */
+.ch_avatar_modal.chac_studio,
+.ch_avatar_modal.chac_studio .chac_workspace,
+.ch_avatar_modal.chac_studio .chac_stage,
+.ch_avatar_modal.chac_studio .chac_editor,
+.ch_avatar_modal.chac_studio .chac_editor_intro,
+.ch_avatar_modal.chac_studio .chac_panel,
+.ch_avatar_modal.chac_studio .chac_editor_footer{
+  float:none!important;clear:both!important;min-width:0!important;max-width:100%!important;
+}
+.ch_avatar_modal.chac_studio{display:block!important;width:100%!important;max-width:700px!important;margin:0 auto!important;overflow-x:hidden!important}
+.ch_avatar_modal.chac_studio .chac_workspace{display:flex!important;flex-direction:column!important;align-items:stretch!important;justify-content:flex-start!important;width:100%!important;gap:0!important}
+.ch_avatar_modal.chac_studio .chac_stage{display:flex!important;flex-direction:column!important;position:relative!important;top:auto!important;align-self:stretch!important;width:100%!important;padding:14px!important;border:0!important;border-bottom:1px solid #e6e5f6!important}
+.ch_avatar_modal.chac_studio .chac_stage_heading{width:100%!important}
+.ch_avatar_modal.chac_studio .chac_avatar_stage{display:flex!important;width:100%!important;max-width:280px!important;min-height:0!important;aspect-ratio:1/1!important;margin:0 auto!important}
+.ch_avatar_modal.chac_studio .chac_avatar_svg{display:block!important;width:100%!important;max-width:280px!important;margin:0 auto!important}
+.ch_avatar_modal.chac_studio .chac_stage_caption{width:100%!important}
+.ch_avatar_modal.chac_studio .chac_stage_buttons{display:flex!important;flex-direction:column!important;align-items:stretch!important;justify-content:flex-start!important;gap:8px!important;width:100%!important;max-width:420px!important;margin:0 auto!important}
+.ch_avatar_modal.chac_studio .chac_stage_buttons .chac_btn{display:flex!important;width:100%!important;max-width:100%!important}
+.ch_avatar_modal.chac_studio .chac_editor{display:block!important;position:relative!important;width:100%!important;padding:16px!important}
+.ch_avatar_modal.chac_studio .chac_editor_intro{display:flex!important;flex-direction:column!important;align-items:flex-start!important;width:100%!important;gap:8px!important}
+.ch_avatar_modal.chac_studio .chac_tabs{display:grid!important;grid-template-columns:minmax(0,1fr)!important;gap:6px!important;width:100%!important}
+.ch_avatar_modal.chac_studio .chac_tabs button{display:flex!important;justify-content:flex-start!important;width:100%!important;min-height:42px!important;padding:10px 12px!important}
+.ch_avatar_modal.chac_studio .chac_panel.is_active{display:block!important;width:100%!important}
+.ch_avatar_modal.chac_studio .chac_color_grid,
+.ch_avatar_modal.chac_studio .chac_choice_grid,
+.ch_avatar_modal.chac_studio .chac_accessory_choices{display:grid!important;grid-template-columns:minmax(0,1fr)!important;gap:8px!important;width:100%!important}
+.ch_avatar_modal.chac_studio .chac_choice_grid button{display:flex!important;flex-direction:row!important;justify-content:flex-start!important;align-items:center!important;width:100%!important;min-height:52px!important;padding:9px 12px!important;text-align:left!important}
+.ch_avatar_modal.chac_studio .chac_color_control{width:100%!important}
+.ch_avatar_modal.chac_studio .chac_swatches,
+.ch_avatar_modal.chac_studio .chac_color_chips{display:flex!important;flex-direction:row!important;flex-wrap:wrap!important;justify-content:flex-start!important;width:100%!important}
+.ch_avatar_modal.chac_studio .chac_editor_footer{display:flex!important;flex-direction:column!important;align-items:stretch!important;width:100%!important}
+.ch_avatar_modal.chac_studio .chac_next{width:100%!important;max-width:100%!important}
+@media(min-width:651px){
+ .ch_avatar_modal.chac_studio .chac_tabs{grid-template-columns:minmax(0,1fr)!important}
+}
+
 </style>
 <script data-cfasync="false">
 (function($){

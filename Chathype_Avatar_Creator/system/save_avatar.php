@@ -16,7 +16,7 @@ if (!$info || $info[0] !== 360 || $info[1] !== 360 || $info['mime'] !== 'image/p
 if (!function_exists('imagecreatefromstring')) chac_fail('PHP GD is vereist om de avatar te verwerken.', 500);
 $im = @imagecreatefromstring($binary);
 if (!$im) chac_fail('PNG kon niet worden verwerkt.');
-$folder = dirname(__DIR__) . '/saved';
+$folder = __DIR__ . '/saved';
 if (!is_dir($folder) && !@mkdir($folder, 0755, true)) { imagedestroy($im); chac_fail('Kan opslagmap niet aanmaken.', 500); }
 $userId = (int)$data['user_id'];
 $fileName = 'user_' . $userId . '.png';

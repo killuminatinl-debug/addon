@@ -1,22 +1,63 @@
-PROFILE MENU INTEGRATION — CodyChat 11
+PROFILE MENU INTEGRATION — CodyChat 11 / PHP 7.4+
 
-1) In system/box/profile.php, after config_session.php is loaded, add:
+A) In system/box/profile.php, directly after config_session.php is loaded, add:
 require_once(__DIR__ . '/../../addons/chathype_avatar_chooser/system/settings.php');
 
-2) Inside .modal_top_menu, directly after the own-profile edit button, add:
+B) In .modal_top_menu, directly after the own-profile edit button, add:
 <?php if(mySelf($user['user_id']) && function_exists('chathypeAvatarEnabled') && chathypeAvatarEnabled()){ ?>
-<div class="cover_text modal_top_item" role="button" tabindex="0" title="Kies je avatar" onclick="chathypeOpenAvatarPicker();"><i class="fa fa-user-circle"></i></div>
+<div class="cover_text modal_top_item" id="chathype_open_avatar_picker" role="button" tabindex="0" title="Maak je eigen avatar">
+    <i class="fa fa-magic"></i>
+</div>
 <?php } ?>
 
-3) Add this script to the profile template:
+C) Add this script once at the bottom of the profile template. It loads the editor HTML and opens it in CodyChat's overlay/modal. The editor endpoint returns content only (it does not wrap it in a second modal).
 <script>
-function chathypeOpenAvatarPicker(){
- $.post('addons/chathype_avatar_chooser/files/avatar_picker.php', {}, function(r){
-  if(typeof showEmptyModal === 'function'){ showEmptyModal(r, 620); }
-  else if(typeof overModal === 'function'){ overModal(r); }
-  else if(typeof showModal === 'function'){ showModal(r); }
- });
-}
+(function($){
+    function chathypeOpenAvatarPicker(){
+        $.ajax({
+            url: 'addons/chathype_avatar_chooser/files/avatar_picker.php',
+            type: 'POST',
+            data: {},
+            cache: false,
+            dataType: 'html'
+        }).done(function(html){
+            if(!html || !String(html).trim()){
+                if(typeof callError === 'function') callError('De avatar-editor kon niet worden geladen. Controleer of de addon is ingeschakeld.');
+                return;
+            }
+            if(typeof overModal === 'function'){
+                overModal(html);
+            }
+            else if(typeof showEmptyModal === 'function'){
+                showEmptyModal(html, 620);
+            }
+            else if(typeof showModal === 'function'){
+                showModal(html);
+            }
+            else {
+                console.error('CodyChat modalfunctie niet gevonden.');
+                if(typeof callError === 'function') callError('De modalfunctie van CodyChat is niet beschikbaar.');
+            }
+        }).fail(function(xhr){
+            console.error('Avatar editor request failed:', xhr.status, xhr.responseText);
+            if(typeof callError === 'function') callError('Avatar-editor laden mislukt (HTTP ' + xhr.status + ').');
+        });
+    }
+
+    $(document)
+        .off('click.chathypeAvatar', '#chathype_open_avatar_picker')
+        .on('click.chathypeAvatar', '#chathype_open_avatar_picker', function(e){
+            e.preventDefault();
+            chathypeOpenAvatarPicker();
+        })
+        .off('keydown.chathypeAvatar', '#chathype_open_avatar_picker')
+        .on('keydown.chathypeAvatar', '#chathype_open_avatar_picker', function(e){
+            if(e.key === 'Enter' || e.key === ' '){
+                e.preventDefault();
+                chathypeOpenAvatarPicker();
+            }
+        });
+})(jQuery);
 </script>
 
-Ensure the files/avatar_picker.php and avatars/ directory from the full ZIP are installed at the paths shown.
+Install the addon folder at addons/chathype_avatar_chooser. Ensure the /avatar folder is writable by PHP. Do not add boomOverModal() around the editor response; the JavaScript opener handles the modal.

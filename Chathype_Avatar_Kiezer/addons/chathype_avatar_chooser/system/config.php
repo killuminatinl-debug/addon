@@ -1,8 +1,12 @@
 <?php
 $load_addons = 'chathype_avatar_chooser';
-if (!defined('BOOM')) { require_once __DIR__ . '/../../../system/config_addons.php'; }
+require_once __DIR__ . '/../../../system/config_addons.php';
 if (!canManageAddons()) { die(); }
-$avatarEnabled = !isset($addons['custom1']) || (string)$addons['custom1'] !== '0';
+$avatarEnabled = true;
+$avatarSettingQuery = $mysqli->query("SELECT custom1 FROM boom_addons WHERE addons = 'chathype_avatar_chooser' LIMIT 1");
+if ($avatarSettingQuery && ($avatarSettingRow = $avatarSettingQuery->fetch_assoc())) {
+    $avatarEnabled = !isset($avatarSettingRow['custom1']) || (string)$avatarSettingRow['custom1'] !== '0';
+}
 ?>
 <?php echo elementTitle('Chathype Avatar Studio', 'loadL(\'admin/setting_addons.php\');'); ?>
 <div class="page_full"><div class="page_element"><div class="config_section chac_admin_card">

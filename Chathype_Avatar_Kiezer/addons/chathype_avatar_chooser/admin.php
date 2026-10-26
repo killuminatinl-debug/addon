@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/../../system/config_session.php';
+require_once __DIR__ . '/../../../system/config_session.php';
 require_once __DIR__ . '/system/settings.php';
 
 $isAdmin = false;

@@ -1,0 +1,15 @@
+CHATHYPE AVATAR CREATOR — MENU/PROFIEL INTEGRATIE
+
+Editorbestand: addons/Chathype_Avatar_Creator/avatar_creator.php
+
+Voorbeeld om vanuit een bestaande CodyChat-menuactie te openen:
+
+$.post('addons/Chathype_Avatar_Creator/avatar_creator.php', {}, function(html){
+    overModal(html);
+}).fail(function(){
+    if (typeof callError === 'function') callError('Kan avatar-editor niet openen.');
+});
+
+Voeg deze actie toe aan de ledenmenu-template en aan het eigen profielmenu van jouw CodyChat 11-installatie. De exacte templates/hooks verschillen per install; dit bestand wijzigt die templates niet automatisch.
+
+De save-endpoint werkt boom_users.user_tumb bij. Controleer dat jouw installatie de waarde als relatief URL-pad rendert en dat deze kolom niet door een ander avatar/addon-systeem wordt overschreven. Maak een databasebackup voor gebruik.

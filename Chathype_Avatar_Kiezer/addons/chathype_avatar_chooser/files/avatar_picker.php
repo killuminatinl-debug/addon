@@ -10,7 +10,7 @@ ob_start();
 <div class="ch_avatar_modal chac_studio" data-action-path="addons/chathype_avatar_chooser/system/action.php" data-chac-ready="0">
   <header class="chac_topbar">
     <div class="chac_brand"><span class="chac_brandmark"><i class="fa fa-magic"></i></span><span><strong>Chathype Avatar Studio</strong><small>Jouw look. Jouw stijl.</small></span></div>
-    <span class="chac_live"><i></i> LIVE VOORBEELD</span>
+    <span class="chac_live"><i></i> LIVE VOORBEELD</span><button type="button" class="chac_close" id="chacClose" aria-label="Avatarvenster sluiten" title="Sluiten"><i class="fa fa-times" aria-hidden="true"></i></button>
   </header>
   <div class="chac_workspace">
     <aside class="chac_stage">
@@ -177,6 +177,12 @@ ob_start();
 @media(prefers-reduced-motion:reduce){.ch_avatar_modal.chac_studio *{animation:none!important;transition:none!important}}
 
 /* Modal fix: cover the legacy picker and center the new studio in the viewport */
+.ch_avatar_modal.chac_studio{box-shadow:0 0 0 100vmax rgba(18,20,40,.62),0 25px 90px rgba(24,24,50,.38)!important}
+.ch_avatar_modal.chac_studio .chac_topbar{position:relative!important;padding-right:58px!important}
+.ch_avatar_modal.chac_studio .chac_close{position:absolute!important;top:12px!important;right:13px!important;z-index:5!important;display:flex!important;align-items:center!important;justify-content:center!important;width:34px!important;height:34px!important;min-width:34px!important;min-height:34px!important;margin:0!important;padding:0!important;border:1px solid #e4e5ef!important;border-radius:10px!important;background:#fff!important;color:#45465d!important;font-size:16px!important;line-height:1!important;cursor:pointer!important;box-shadow:0 2px 8px rgba(25,25,55,.08)!important}
+.ch_avatar_modal.chac_studio .chac_close:hover{background:#f2f0ff!important;color:#6558e8!important;border-color:#cfcafd!important}
+.ch_avatar_modal.chac_studio .chac_close i{pointer-events:none!important}
+
 .ch_avatar_modal.chac_studio{
  position:fixed!important;
  left:50%!important;
@@ -259,6 +265,15 @@ ob_start();
   var root=document.querySelector('.chac_studio');
   if(!root||root.getAttribute('data-chac-ready')==='1')return;
   root.setAttribute('data-chac-ready','1');
+  var closeButton=root.querySelector('#chacClose');
+  if(closeButton){
+    closeButton.addEventListener('click',function(){
+      if(typeof hideOver==='function'){hideOver();return;}
+      var parent=root.parentElement;
+      root.remove();
+      if(parent&&parent.children.length===0){parent.style.display='none';}
+    });
+  }
   var canvas=root.querySelector('#chacCanvas'),ctx=canvas.getContext('2d'),svgHost=root.querySelector('#chacAvatarSvg');
   function q(id){return root.querySelector('#chac'+id)}
   function val(id){return q(id).value}
